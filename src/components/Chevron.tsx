@@ -8,7 +8,7 @@ export function ChevronLeft() {
         slider!.scrollLeft = slider!.scrollLeft - 500;
     }
 
-    return <MdChevronLeft size={40} onClick={slideLeft} />
+    return <MdChevronLeft className="opacity-50 cursor-pointer hover:opacity-100" size={40} onClick={slideLeft} />
 }
 
 export function ChevronRight() {
@@ -17,5 +17,5 @@ export function ChevronRight() {
         slider!.scrollLeft = slider!.scrollLeft + 500;
     }
 
-    return <MdChevronRight size={40} onClick={slideRight} />
+    return <MdChevronRight className="opacity-50 cursor-pointer hover:opacity-100" size={40} onClick={slideRight} />
 }
