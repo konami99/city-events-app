@@ -11,7 +11,7 @@ export default function EventCard() {
 
     return (
         <Link href={ "/events/2" }
-            className="card w-full bg-base-100 transition-shadow hover:shadow-xl"
+            className="card w-[360px] h-[460px] shrink-0 inline-block mx-4 bg-base-100 transition-shadow hover:shadow-xl"
         >
             <figure>
 
