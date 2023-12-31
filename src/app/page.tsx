@@ -16,8 +16,8 @@ export default async function Home() {
         <ChevronLeft />
         <div id="slider" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
           {
-            events.map((event) => (
-              <EventCard key={1} event={event} />
+            events.map((event, index) => (
+              <EventCard key={index} event={event} />
             ))
           }
         </div>

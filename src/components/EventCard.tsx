@@ -18,17 +18,22 @@ export default function EventCard({ event }) {
     }
 
     return (
-        <Link href={ "/events/2" }
+        <Link href={ `/events/${event.slug.current}` }
             className="card w-[360px] shrink-0 inline-block mx-4 bg-base-100 transition-shadow hover:shadow-xl"
         >
             <figure>
-                <img src={urlFor(event.mainImage.asset._id).width(360).url()} />
+                <img src={urlFor(event.mainImage.asset._id).width(360).height(350).url()} />
             </figure>
             <div className="card-body">
                 <h2 className="card-title">{event.title}</h2>
                 { isNew && <div className="badge badge-secondary">NEW</div> }
-                <p>Event Description</p>
-                <CategoryTag name={ `Event Name` } />
+                <div className="flex">
+                    {
+                        event.categories.map((category, index) => (
+                            <CategoryTag name={ category.title } key={index} />
+                        ))
+                    }
+                </div>
             </div>
         </Link>
     )

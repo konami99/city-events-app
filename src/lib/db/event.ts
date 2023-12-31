@@ -16,6 +16,9 @@ export async function getEvents() {
                         categories {
                             title
                         }
+                        slug {
+                            current
+                        }
                         mainImage {
                             asset {
                                 _id
@@ -41,7 +44,7 @@ export async function getEvents() {
 
     const response = await (await fetch(GRAPHQL_API_URL, options)).json();
 
-    //console.log('RESPONSE FROM FETCH REQUEST', response?.data?.allEvent);
+    console.log('RESPONSE FROM FETCH REQUEST', response?.data?.allEvent);
     return response?.data?.allEvent;
 }
 
