@@ -1,21 +1,30 @@
 import EventCard from '@/components/EventCard'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from '@/components/Chevron'
+import { getEvents } from '@/lib/db/event';
+import { useEffect } from 'react';
 
-export default function Home() {
-  return (
-    <div className="relative flex items-center">
-      <ChevronLeft />
-      <div id="slider" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
-        <EventCard key={1} />
-        <EventCard key={2} />
-        <EventCard key={3} />
-        <EventCard key={4} />
-        <EventCard key={5} />
-        <EventCard key={6} />
-        <EventCard key={7} />
+export default async function Home() {
+
+  const events = await getEvents();
+
+  //console.log(events.length);
+
+  if (events.length > 0) {
+    return (
+      <div className="relative flex items-center">
+        <ChevronLeft />
+        <div id="slider" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
+          {
+            events.map((event) => (
+              <EventCard key={1} event={event} />
+            ))
+          }
+        </div>
+        <ChevronRight />
       </div>
-      <ChevronRight />
-    </div>
-  )
+    )
+  } else {
+    return <div className="relative flex items-center">No Events Found</div>
+  }
 }
