@@ -3,5 +3,5 @@ interface CategoryTagProps {
 }
 
 export default function CategoryTag({ name }: CategoryTagProps) {
-    return <div className="badge badge-neutral">{name}</div>;
+    return <span className="badge badge-neutral">{name}</span>;
 }

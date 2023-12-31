@@ -8,21 +8,21 @@ export default async function Home() {
 
   const events = await getEvents();
 
-  //console.log(events.length);
-
   if (events.length > 0) {
     return (
-      <div className="relative flex items-center">
-        <ChevronLeft />
-        <div id="slider" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
-          {
-            events.map((event, index) => (
-              <EventCard key={index} event={event} />
-            ))
-          }
+      <section id="todays-events"style={{background: 'linear-gradient(rgb(44, 157, 206) 0%, rgb(80, 159, 185) 30%, rgb(174, 235, 255) 100%);'}}>
+        <div className="relative flex items-center p-4">
+          <ChevronLeft />
+          <div id="slider" className='my-32 w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
+            {
+              events.map((event, index) => (
+                <EventCard key={index} event={event} />
+              ))
+            }
+          </div>
+          <ChevronRight />
         </div>
-        <ChevronRight />
-      </div>
+      </section>
     )
   } else {
     return <div className="relative flex items-center">No Events Found</div>
