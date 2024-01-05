@@ -19,18 +19,18 @@ export default async function Home() {
             </div>
           </header>
           <div className="relative flex items-center p-4">
-            <ChevronLeft />
-            <div id="slider" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
+            <ChevronLeft targetId={ 'slider-todays-events' } />
+            <div id="slider-todays-events" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
               {
                 events.map((event, index) => (
                   <EventCard key={index} event={event} />
                 ))
               }
             </div>
-            <ChevronRight />
+            <ChevronRight targetId={ 'slider-todays-events' } />
           </div>
         </section>
-        <section className="todays-events pt-[6rem] pb-[3rem] bg-white">
+        <section className="our-picks pt-[6rem] pb-[3rem] bg-white">
           <header className="relative flex flex-col items-center py-4 my-0 mx-[calc(2rem+28.21px)]">
             <div className='subtitle ml-4 w-full text-transform: uppercase text-[0.75rem]'>Upcoming events</div>
             <div className='title ml-4 w-full text-[1.75rem] text-white'>
@@ -38,15 +38,15 @@ export default async function Home() {
             </div>
           </header>
           <div className="relative flex items-center p-4">
-            <ChevronLeft />
-            <div id="slider" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
+            <ChevronLeft targetId={ 'slider-our-picks' } />
+            <div id="slider-our-picks" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
               {
                 events.map((event, index) => (
                   <EventCard key={index} event={event} />
                 ))
               }
             </div>
-            <ChevronRight />
+            <ChevronRight targetId={ 'slider-our-picks' } />
           </div>
         </section>
       </>
