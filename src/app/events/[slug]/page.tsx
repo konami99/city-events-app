@@ -38,6 +38,18 @@ export default async function EventPage({
             <div className="py-0 lg:px-[10rem] md:px-[1rem] h-[350px]" style={{background: 'linear-gradient(to top, rgb(4, 28, 44) 0%, rgb(4, 28, 44) 5rem, rgba(4, 28, 44, 0) 5.0625rem, rgba(4, 28, 44, 0) 100%)'}}>
                 <div className="hero h-[350px]" style={{backgroundImage: `url(${urlFor(event.mainImage.asset._id).width(360).height(350).url()})`}}></div>
             </div>
+            <div className="event-content py-[5rem] px-[1rem]">
+                <div className="event-content-container grid grid-cols-1 md:grid-cols-3">
+                    <div className="event-description col-span-1 md:col-span-2">
+                        desc
+                    </div>
+                    <div className="event-sidebar-container">
+                        <div className="event-sidebar">
+                            sidebar
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
