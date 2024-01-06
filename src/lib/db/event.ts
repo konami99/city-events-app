@@ -75,6 +75,7 @@ export async function getEvent(slug: String) {
                             }
                         }
                         descriptionRaw
+                        eventOrganiser
                     }
                 }`,
         variables: {
