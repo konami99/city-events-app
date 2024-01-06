@@ -6,7 +6,19 @@ import { useEffect } from 'react';
 
 export default async function Home() {
 
-  const events = await getEvents();
+  const events = await getEvents({
+    where: {
+        startDate: {
+            lte: new Date(new Date().setDate(new Date().getDate() - 1)),
+        },
+        endDate: {
+            gte: new Date(new Date().setDate(new Date().getDate() + 1)),
+        },
+        status: {
+            eq: 'approved'
+        }
+    }
+  });
 
   if (events.length > 0) {
     return (

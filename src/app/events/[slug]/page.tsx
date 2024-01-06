@@ -1,4 +1,4 @@
-import { getEvent } from "@/lib/db/event"
+import { getEvents } from "@/lib/db/event"
 import sanityClient from "../../../components/SanityClient";
 import imageUrlBuilder from '@sanity/image-url'
 import CategoryTag from "@/components/CategoryTag";
@@ -20,7 +20,17 @@ export default async function EventPage({
         return builder.image(source)
     }
 
-    const event = await getEvent(slug);
+    const events = await getEvents({
+        where: {
+            slug: {
+                current: {
+                    eq: slug,
+                }
+            }
+        }
+    });
+
+    const event = events[0];
 
     return (
         <div className="bg-white">
