@@ -30,7 +30,7 @@ export default async function EventPage({
         }
     });
 
-    const event = events[0];
+    const event = events.events[0];
 
     return (
         <div className="bg-white">
