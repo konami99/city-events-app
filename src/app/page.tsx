@@ -3,10 +3,12 @@ import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from '@/components/Chevron'
 import { getEvents } from '@/lib/db/event';
 import { useEffect } from 'react';
+import Link from 'next/link';
+import { fetchEvents } from './actions';
 
 export default async function Home() {
 
-  const today_events = await getEvents({
+  const today_events = await fetchEvents({
     where: {
         startDate: {
             lte: new Date(new Date().setDate(new Date().getDate() - 1)),
@@ -20,7 +22,7 @@ export default async function Home() {
     }
   });
 
-  const selected_events = await getEvents({
+  const selected_events = await fetchEvents({
     where: {
         startDate: {
             lte: new Date(new Date().setDate(new Date().getDate() - 1)),
@@ -39,7 +41,7 @@ export default async function Home() {
 
   return (
     <>
-      {today_events.events.length > 0 &&
+      {today_events.length > 0 &&
         <section className="todays-events pt-[6rem] pb-[3rem]" style={{background: 'linear-gradient(rgb(44, 157, 206) 0%, rgb(80, 159, 185) 30%, rgb(174, 235, 255) 100%)'}}>
         <header className="relative flex flex-col items-center py-4 my-0 mx-[calc(2rem+28.21px)]">
           <div className='subtitle ml-4 w-full text-transform: uppercase text-[0.75rem]'>Up next</div>
@@ -51,7 +53,7 @@ export default async function Home() {
           <ChevronLeft targetId={ 'slider-todays-events' } />
           <div id="slider-todays-events" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
             {
-              today_events.events.map((event, index) => (
+              today_events.map((event, index) => (
                 <EventCard key={index} event={event} />
               ))
             }
@@ -60,19 +62,23 @@ export default async function Home() {
         </div>
         </section>
       }
-      {selected_events.events.length > 0 &&
+      {selected_events.length > 0 &&
         <section className="our-picks pt-[6rem] pb-[3rem] bg-white">
           <header className="relative flex flex-col items-center py-4 my-0 mx-[calc(2rem+28.21px)]">
-            <div className='subtitle ml-4 w-full text-transform: uppercase text-[0.75rem]'>Upcoming events</div>
+            <div className='subtitle ml-4 w-full text-transform: uppercase text-[0.75rem]'>Fun and educational ideas</div>
             <div className='title ml-4 w-full text-[1.75rem] text-white'>
-              <h2><span className='text-black'>Our picks</span></h2>
+              <h2>
+                <Link href={ `/programs/school-holidays` }>
+                  <span className='text-black'>School holidays</span>
+                </Link>
+              </h2>
             </div>
           </header>
           <div className="relative flex items-center p-4">
             <ChevronLeft targetId={ 'slider-our-picks' } />
             <div id="slider-our-picks" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
               {
-                selected_events.events.map((event, index) => (
+                selected_events.map((event, index) => (
                   <EventCard key={index} event={event} />
                 ))
               }

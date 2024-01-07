@@ -1,4 +1,4 @@
-'user server'
+'use server'
 
 import { getEvents } from "@/lib/db/event"
 
