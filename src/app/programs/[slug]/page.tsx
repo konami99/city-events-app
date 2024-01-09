@@ -37,7 +37,7 @@ export default async function ProgramPage({
                 <div className="program-content"  style={{backgroundImage: `linear-gradient(0deg, #ffffff 0%, #e7e7e7 100%)`}}>
                     <div className="relative z-3 program-content-inner mt-[-5rem] px-[1rem]">
                         <div className="bg-white program-container max-w-[70rem] mx-[auto]">
-                            <div className="program-columns flex pt-[2.625rem] px-[5rem] pb-[3.375rem]">
+                            <div className="program-columns flex flex-wrap pt-[2.625rem] px-[5rem] pb-[3.375rem]">
                                 <div className="program-column-left w-full max-w-full flex-[1_1_100%] md:w-2/4 md:max-w-[50%] md:flex-[1_1_50%]">
                                     <div className="program-column-inner">
                                         <h1>{ program.title }</h1>
