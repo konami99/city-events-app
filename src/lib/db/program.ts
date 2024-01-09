@@ -10,8 +10,14 @@ export async function getPrograms({ where, limit = 10, page = 1 }) {
         query: `query getAllPrograms($where: ProgramFilter) {
                     allProgram(where: $where, limit: ${limit}, offset: ${offset}) {
                         title
+                        description
                         slug {
                             current
+                        }
+                        mainImage {
+                            asset {
+                                _id
+                            }
                         }
                         events {
                             title

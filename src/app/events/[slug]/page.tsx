@@ -1,4 +1,4 @@
-import sanityClient from "../../../components/SanityClient";
+import sanityClient from "@/components/SanityClient";
 import imageUrlBuilder from '@sanity/image-url'
 import CategoryTag from "@/components/CategoryTag";
 import {PortableText} from '@portabletext/react'
