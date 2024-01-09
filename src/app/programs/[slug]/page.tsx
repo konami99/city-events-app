@@ -1,4 +1,4 @@
-import { fetchEvents } from "@/app/actions";
+import { fetchPrograms } from "@/app/actions";
 
 interface ProgramPageProps {
     params: {
@@ -6,14 +6,18 @@ interface ProgramPageProps {
     }
 }
 
-export default async function EventPage({
+export default async function ProgramPage({
     params: { slug }
 }: ProgramPageProps) {
-    const events = await fetchEvents({
+    const programs = await fetchPrograms({
         where: {
-            program: {
-                eq: slug,
+            slug: {
+                current: {
+                    eq: slug,
+                },
             }
         }
     });
+
+    const program = programs[0];
 }

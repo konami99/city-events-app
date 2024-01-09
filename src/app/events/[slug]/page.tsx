@@ -1,8 +1,8 @@
-import { getEvents } from "@/lib/db/event"
 import sanityClient from "../../../components/SanityClient";
 import imageUrlBuilder from '@sanity/image-url'
 import CategoryTag from "@/components/CategoryTag";
 import {PortableText} from '@portabletext/react'
+import { fetchEvents } from "@/app/actions";
 
 interface EventPageProps {
     params: {
@@ -20,7 +20,7 @@ export default async function EventPage({
         return builder.image(source)
     }
 
-    const events = await getEvents({
+    const events = await fetchEvents({
         where: {
             slug: {
                 current: {
@@ -30,7 +30,7 @@ export default async function EventPage({
         }
     });
 
-    const event = events.events[0];
+    const event = events[0];
 
     return (
         <div className="bg-white">
