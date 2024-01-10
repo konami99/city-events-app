@@ -40,18 +40,27 @@ export default async function ProgramPage({
                             <div className="program-columns flex flex-wrap pt-[2.625rem] px-[5rem] pb-[3.375rem]">
                                 <div className="program-column-left w-full max-w-full flex-[1_1_100%] md:w-2/4 md:max-w-[50%] md:flex-[1_1_50%]">
                                     <div className="program-column-inner">
-                                        <h1>{ program.title }</h1>
+                                        <h1 className="text-center md:text-left text-[2.5rem] font-bold mb-[1rem] md:mb-[1.25rem]">{ program.title }</h1>
                                     </div>
                                 </div>
                                 <div className="program-column-right w-full max-w-full flex-[1_1_100%] md:w-2/4 md:max-w-[50%] md:flex-[1_1_50%]">
                                     <div className="program-column-inner">
-                                        <p>{ program.description }</p>
+                                        <p className="text-center md:text-left text-[1.125rem] font-normal">{ program.description }</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </section>
+            <section className="bg-white">
+                <section className="events py-[5rem] px-[1rem]">
+                    <div className="content-wrapper md:max-w-[70rem] md:m-auto">
+                        <div className='title ml-4 w-full text-[1.75rem] text-white'>
+                            <h2 className='text-black'>Upcoming events</h2>
+                        </div>
+                    </div>
+                </section>
             </section>
         </div>
     )
