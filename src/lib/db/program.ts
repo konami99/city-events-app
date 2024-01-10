@@ -20,12 +20,27 @@ export async function getPrograms({ where, limit = 10, page = 1 }) {
                             }
                         }
                         events {
+                            user {
+                                name
+                            }
                             title
+                            startDate
+                            endDate
+                            categories {
+                                title
+                            }
                             mainImage {
                                 asset {
                                     _id
                                 }
                             }
+                            slug {
+                              current
+                            }
+                            descriptionRaw
+                            eventOrganiser
+                            pick
+                            status
                         }
                     }
                 }`,

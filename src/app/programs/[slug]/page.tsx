@@ -1,4 +1,6 @@
 import { fetchPrograms } from "@/app/actions";
+import { ChevronLeft, ChevronRight } from "@/components/Chevron";
+import EventCard from "@/components/EventCard";
 import sanityClient from "@/components/SanityClient";
 import imageUrlBuilder from '@sanity/image-url'
 
@@ -55,10 +57,25 @@ export default async function ProgramPage({
             </section>
             <section className="bg-white">
                 <section className="events py-[5rem] px-[1rem]">
-                    <div className="content-wrapper md:max-w-[70rem] md:m-auto">
-                        <div className='title ml-4 w-full text-[1.75rem] text-white'>
-                            <h2 className='text-black'>Upcoming events</h2>
+                    <div className="content-wrapper w-full md:max-w-[70rem] md:m-auto">
+                        <div className="content-header">
+                            <div className='title ml-4 w-full text-[1.75rem] text-white'>
+                                <h2 className='text-black'>Upcoming events</h2>
+                            </div>
                         </div>
+                        <div className="content-container w-[100vw] my-0 mx-[-0.625rem] xl:mx-[calc(-50vw_+_35.625rem)]">
+                            <div className="relative flex items-center p-4">
+                            <ChevronLeft targetId={ 'slider-upcoming-events' } />
+                            <div id="slider-upcoming-events" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
+                            {
+                                program.events.map((event, index) => (
+                                    <EventCard key={index} event={event} />
+                                ))
+                            }
+                            </div>
+                            <ChevronRight targetId={ 'slider-upcoming-events' } />
+                        </div>
+                    </div>
                     </div>
                 </section>
             </section>
