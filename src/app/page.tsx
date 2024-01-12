@@ -54,7 +54,7 @@ export default async function Home() {
           <div id="slider-todays-events" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
             {
               today_events.map((event, index) => (
-                <EventCard key={index} event={event} />
+                <EventCard key={index} event={event} imageSource={event.mainImage.asset._id} />
               ))
             }
           </div>
@@ -79,7 +79,7 @@ export default async function Home() {
             <div id="slider-our-picks" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
               {
                 selected_events.map((event, index) => (
-                  <EventCard key={index} event={event} />
+                  <EventCard key={index} event={event} imageSource={event.mainImage.asset._id} />
                 ))
               }
             </div>

@@ -1,8 +1,10 @@
-import { fetchPrograms } from "@/app/actions";
+import { fetchEventsByProgram, fetchPrograms } from "@/app/actions";
+import InfiniteScrollEvents from "@/app/events/infinite-scroll-events";
 import { ChevronLeft, ChevronRight } from "@/components/Chevron";
 import EventCard from "@/components/EventCard";
 import sanityClient from "@/components/SanityClient";
-import imageUrlBuilder from '@sanity/image-url'
+import imageUrlBuilder from '@sanity/image-url';
+import { v4 as uuid } from 'uuid';
 
 interface ProgramPageProps {
     params: {
@@ -31,6 +33,11 @@ export default async function ProgramPage({
     });
 
     const program = programs[0];
+
+
+    const events = await fetchEventsByProgram({ programSlug: slug });
+
+    console.log(events)
 
     return (
         <div className="program">
@@ -63,19 +70,11 @@ export default async function ProgramPage({
                                 <h2 className='text-black'>Upcoming events</h2>
                             </div>
                         </div>
-                        <div className="content-container w-[100vw] my-0 mx-[-0.625rem] xl:mx-[calc(-50vw_+_35.625rem)]">
-                            <div className="relative flex items-center p-4">
-                            <ChevronLeft targetId={ 'slider-upcoming-events' } />
-                            <div id="slider-upcoming-events" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
-                            {
-                                program.events.map((event, index) => (
-                                    <EventCard key={index} event={event} />
-                                ))
-                            }
-                            </div>
-                            <ChevronRight targetId={ 'slider-upcoming-events' } />
+                        <div className="content-container my-0 mx-[-0.625rem] xl:mx-[calc(-50vw_+_35.625rem)]">
+                            <ul key={uuid()} role='list' className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8'>
+                                <InfiniteScrollEvents programSlug={slug} initialEvents={events} />
+                            </ul>
                         </div>
-                    </div>
                     </div>
                 </section>
             </section>

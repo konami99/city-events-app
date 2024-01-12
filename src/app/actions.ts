@@ -1,6 +1,6 @@
 'use server'
 
-import { getEvents } from "@/lib/db/event"
+import { getEvents, getEventsByProgram } from "@/lib/db/event"
 import { getPrograms } from "@/lib/db/program";
 
 
@@ -13,6 +13,19 @@ export async function fetchEvents({
 }) {
     
     const { events } = await getEvents({ where, page });
+    
+    return events;
+}
+
+export async function fetchEventsByProgram({
+    programSlug,
+    lastEventId = ""
+}: {
+    programSlug: string,
+    lastEventId?: string,
+}) {
+    
+    const events = await getEventsByProgram({ programSlug, lastEventId });
     
     return events;
 }

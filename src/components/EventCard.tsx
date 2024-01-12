@@ -8,7 +8,7 @@ interface EventCardProps {
     event: Event,
 }
 
-export default function EventCard({ event }) {
+export default function EventCard({ event, imageSource }) {
     const isNew = true;
     const myConfiguredSanityClient = sanityClient();
     const builder = imageUrlBuilder(myConfiguredSanityClient)
@@ -19,10 +19,10 @@ export default function EventCard({ event }) {
 
     return (
         <Link href={ `/events/${event.slug.current}` }
-            className="card w-[360px] shrink-0 inline-block mx-4 bg-base-100 transition-shadow hover:shadow-xl"
+            className="card shrink-0 inline-block mx-4 bg-base-100 transition-shadow hover:shadow-xl"
         >
             <figure>
-                <img src={urlFor(event.mainImage.asset._id).width(360).height(350).url()} />
+                <img src={urlFor(imageSource).width(360).height(350).url()} />
             </figure>
             <div className="card-body">
                 <h2 className="card-title">{event.title}</h2>

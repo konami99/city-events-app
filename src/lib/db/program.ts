@@ -19,29 +19,6 @@ export async function getPrograms({ where, limit = 10, page = 1 }) {
                                 _id
                             }
                         }
-                        events {
-                            user {
-                                name
-                            }
-                            title
-                            startDate
-                            endDate
-                            categories {
-                                title
-                            }
-                            mainImage {
-                                asset {
-                                    _id
-                                }
-                            }
-                            slug {
-                              current
-                            }
-                            descriptionRaw
-                            eventOrganiser
-                            pick
-                            status
-                        }
                     }
                 }`,
         variables: {
@@ -57,6 +34,5 @@ export async function getPrograms({ where, limit = 10, page = 1 }) {
 
     const response = await (await fetch(GRAPHQL_API_URL, options)).json();
 
-    console.log('RESPONSE FROM FETCH REQUEST', response?.data?.allProgram);
     return { programs: JSON.parse(JSON.stringify(response?.data?.allProgram)) }
 }
