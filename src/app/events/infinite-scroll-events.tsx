@@ -2,15 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { fetchEventsByProgram } from "../actions";
 import EventCard from "@/components/EventCard";
 
 export default function InfiniteScrollEvents({
     programSlug,
     initialEvents,
+    fetchEventsByProgram,
+    config,
 }: {
     programSlug: string,
-    initialEvents: any
+    initialEvents: any,
+    fetchEventsByProgram: any,
+    config: any,
 }) {
     const [events, setEvents] = useState(initialEvents);
     const [ref, inView] = useInView();
@@ -41,7 +44,7 @@ export default function InfiniteScrollEvents({
         <>
             {
                 events.map((event, index) => (
-                    <EventCard key={index} event={event} imageSource={event.mainImage.asset._ref} />
+                    <EventCard key={index} event={event} imageSource={event.mainImage.asset._ref} config={config} />
                 ))
             }
             {/* loading spinner */}

@@ -1,17 +1,21 @@
+'use client'
+
 import Link from "next/link";
 import CategoryTag from "./CategoryTag";
 import Image from "next/image";
-import sanityClient from "./SanityClient";
+import sanityClient from "./SanityClientConfig";
 import imageUrlBuilder from '@sanity/image-url'
+import { createClient } from "@sanity/client";
 
 interface EventCardProps {
     event: Event,
 }
 
-export default function EventCard({ event, imageSource }) {
+export default function EventCard({ event, imageSource, config }) {
     const isNew = true;
-    const myConfiguredSanityClient = sanityClient();
-    const builder = imageUrlBuilder(myConfiguredSanityClient)
+
+    const sanityClient = createClient(config);
+    const builder = imageUrlBuilder(sanityClient)
 
     const urlFor = (source) => {
         return builder.image(source)
@@ -22,8 +26,10 @@ export default function EventCard({ event, imageSource }) {
             className="card shrink-0 inline-block mx-4 bg-base-100 transition-shadow hover:shadow-xl"
         >
             <figure>
+                
                 <img src={urlFor(imageSource).width(360).height(350).url()} />
-            </figure>
+                
+                </figure>
             <div className="card-body">
                 <h2 className="card-title">{event.title}</h2>
                 { isNew && <div className="badge badge-secondary">NEW</div> }

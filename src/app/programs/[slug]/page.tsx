@@ -1,8 +1,8 @@
 import { fetchEventsByProgram, fetchPrograms } from "@/app/actions";
 import InfiniteScrollEvents from "@/app/events/infinite-scroll-events";
 import { ChevronLeft, ChevronRight } from "@/components/Chevron";
-import EventCard from "@/components/EventCard";
-import sanityClient from "@/components/SanityClient";
+import { sanityClientConfig } from "@/components/SanityClientConfig";
+import { createClient, type ClientConfig } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url';
 import { v4 as uuid } from 'uuid';
 
@@ -15,8 +15,9 @@ interface ProgramPageProps {
 export default async function ProgramPage({
     params: { slug }
 }: ProgramPageProps) {
-    const myConfiguredSanityClient = sanityClient();
-    const builder = imageUrlBuilder(myConfiguredSanityClient)
+    const sanityClient = createClient(sanityClientConfig);
+
+    const builder = imageUrlBuilder(sanityClient)
 
     const urlFor = (source) => {
         return builder.image(source)
@@ -72,7 +73,7 @@ export default async function ProgramPage({
                         </div>
                         <div className="content-container my-0 mx-[-0.625rem] xl:mx-[calc(-50vw_+_35.625rem)]">
                             <ul key={uuid()} role='list' className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8'>
-                                <InfiniteScrollEvents programSlug={slug} initialEvents={events} />
+                                <InfiniteScrollEvents programSlug={slug} initialEvents={events} fetchEventsByProgram={fetchEventsByProgram} config={sanityClientConfig} />
                             </ul>
                         </div>
                     </div>

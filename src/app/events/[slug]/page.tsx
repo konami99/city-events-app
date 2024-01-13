@@ -1,8 +1,9 @@
-import sanityClient from "@/components/SanityClient";
+import { sanityClientConfig } from "@/components/SanityClientConfig";
 import imageUrlBuilder from '@sanity/image-url'
 import CategoryTag from "@/components/CategoryTag";
 import {PortableText} from '@portabletext/react'
 import { fetchEvents } from "@/app/actions";
+import { createClient } from '@sanity/client'
 
 interface EventPageProps {
     params: {
@@ -13,8 +14,9 @@ interface EventPageProps {
 export default async function EventPage({
     params: { slug }
 }: EventPageProps) {
-    const myConfiguredSanityClient = sanityClient();
-    const builder = imageUrlBuilder(myConfiguredSanityClient)
+    const sanityClient = createClient(sanityClientConfig);
+
+    const builder = imageUrlBuilder(sanityClient)
 
     const urlFor = (source) => {
         return builder.image(source)

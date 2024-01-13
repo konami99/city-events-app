@@ -1,5 +1,8 @@
+'use server'
+
 import { json } from "stream/consumers";
-import sanityClient from "@/components/SanityClient";
+import { sanityClientConfig } from "@/components/SanityClientConfig";
+import { createClient } from "@sanity/client";
 
 export async function getEvents({ where, limit = 10, page = 1 }) {
     const GRAPHQL_API_URL = 'https://on7y4gyd.api.sanity.io/v2023-08-01/graphql/production/default';
@@ -50,9 +53,9 @@ export async function getEvents({ where, limit = 10, page = 1 }) {
 }
 
 export async function getEventsByProgram({ programSlug, limit = 2, lastEventId = "" }) {
-    const myConfiguredSanityClient = sanityClient();
+    const sanityClient = createClient(sanityClientConfig);
     
-    const events = await myConfiguredSanityClient.fetch(`
+    const events = await sanityClient.fetch(`
         *[_type == "event" && _id > $lastEventId && references(*[_type=="program" && slug.current == '${programSlug}']._id)] | order(_id) [0...${limit}] {
             _id,
             slug,

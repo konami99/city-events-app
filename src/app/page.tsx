@@ -5,8 +5,16 @@ import { getEvents } from '@/lib/db/event';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { fetchEvents } from './actions';
+import sanityClient from '@/components/SanityClientConfig';
+import { ClientConfig } from '@sanity/client';
 
 export default async function Home() {
+  const config: ClientConfig = {
+      projectId: process.env.SANITY_PROJECT_ID,
+      dataset: process.env.SANITY_DATASET,
+      useCdn: process.env.SANITY_USE_CDN === 'true',
+      apiVersion: process.env.SANITY_API_VERSION,
+  };
 
   const today_events = await fetchEvents({
     where: {
@@ -54,7 +62,7 @@ export default async function Home() {
           <div id="slider-todays-events" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
             {
               today_events.map((event, index) => (
-                <EventCard key={index} event={event} imageSource={event.mainImage.asset._id} />
+                <EventCard key={index} event={event} imageSource={event.mainImage.asset._id} config={config} />
               ))
             }
           </div>
@@ -79,7 +87,7 @@ export default async function Home() {
             <div id="slider-our-picks" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
               {
                 selected_events.map((event, index) => (
-                  <EventCard key={index} event={event} imageSource={event.mainImage.asset._id} />
+                  <EventCard key={index} event={event} imageSource={event.mainImage.asset._id} config={config} />
                 ))
               }
             </div>
