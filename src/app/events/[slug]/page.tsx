@@ -18,7 +18,7 @@ export default async function EventPage({
 
     const builder = imageUrlBuilder(sanityClient)
 
-    const urlFor = (source) => {
+    const urlFor = (source: any) => {
         return builder.image(source)
     }
 
@@ -40,7 +40,7 @@ export default async function EventPage({
                 <div className="header-container">
                     <div className="m-[1rem]">
                         {
-                            event.categories.map((category, index) => (
+                            event.categories.map((category: any, index: any) => (
                                 <CategoryTag name={ category.title } key={index} />
                             ))
                         }

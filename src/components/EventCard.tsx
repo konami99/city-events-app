@@ -3,7 +3,6 @@
 import Link from "next/link";
 import CategoryTag from "./CategoryTag";
 import Image from "next/image";
-import sanityClient from "./SanityClientConfig";
 import imageUrlBuilder from '@sanity/image-url'
 import { createClient } from "@sanity/client";
 
@@ -11,13 +10,17 @@ interface EventCardProps {
     event: Event,
 }
 
-export default function EventCard({ event, imageSource, config }) {
+export default function EventCard({ event, imageSource, sanityClientConfig }: {
+    event: any,
+    imageSource: any,
+    sanityClientConfig: any,
+}) {
     const isNew = true;
 
-    const sanityClient = createClient(config);
+    const sanityClient = createClient(sanityClientConfig);
     const builder = imageUrlBuilder(sanityClient)
 
-    const urlFor = (source) => {
+    const urlFor = (source: any) => {
         return builder.image(source)
     }
 
@@ -35,7 +38,7 @@ export default function EventCard({ event, imageSource, config }) {
                 { isNew && <div className="badge badge-secondary">NEW</div> }
                 <div className="flex">
                     {
-                        event.categories.map((category, index) => (
+                        event.categories.map((category: any, index: any) => (
                             <CategoryTag name={ category.title } key={index} />
                         ))
                     }

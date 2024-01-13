@@ -19,7 +19,7 @@ export default async function ProgramPage({
 
     const builder = imageUrlBuilder(sanityClient)
 
-    const urlFor = (source) => {
+    const urlFor = (source: any) => {
         return builder.image(source)
     }
 
@@ -35,10 +35,7 @@ export default async function ProgramPage({
 
     const program = programs[0];
 
-
     const events = await fetchEventsByProgram({ programSlug: slug });
-
-    console.log(events)
 
     return (
         <div className="program">
@@ -73,7 +70,7 @@ export default async function ProgramPage({
                         </div>
                         <div className="content-container my-0 mx-[-0.625rem] xl:mx-[calc(-50vw_+_35.625rem)]">
                             <ul key={uuid()} role='list' className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8'>
-                                <InfiniteScrollEvents programSlug={slug} initialEvents={events} fetchEventsByProgram={fetchEventsByProgram} config={sanityClientConfig} />
+                                <InfiniteScrollEvents programSlug={slug} initialEvents={events} fetchEventsByProgram={fetchEventsByProgram} sanityClientConfig={sanityClientConfig} />
                             </ul>
                         </div>
                     </div>

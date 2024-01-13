@@ -1,4 +1,8 @@
-export async function getPrograms({ where, limit = 10, page = 1 }) {
+export async function getPrograms({ where, limit = 10, page = 1 }: {
+    where: any,
+    limit?: number,
+    page: number,
+}) {
     const GRAPHQL_API_URL = 'https://on7y4gyd.api.sanity.io/v2023-08-01/graphql/production/default';
     const headers = {
         'content-type': 'application/json',

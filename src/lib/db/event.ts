@@ -4,7 +4,11 @@ import { json } from "stream/consumers";
 import { sanityClientConfig } from "@/components/SanityClientConfig";
 import { createClient } from "@sanity/client";
 
-export async function getEvents({ where, limit = 10, page = 1 }) {
+export async function getEvents({ where, limit = 10, page = 1 }: {
+    where: any,
+    limit?: number,
+    page: number,
+}) {
     const GRAPHQL_API_URL = 'https://on7y4gyd.api.sanity.io/v2023-08-01/graphql/production/default';
     const headers = {
         'content-type': 'application/json',
@@ -52,7 +56,11 @@ export async function getEvents({ where, limit = 10, page = 1 }) {
     return { events: JSON.parse(JSON.stringify(response?.data?.allEvent)) }
 }
 
-export async function getEventsByProgram({ programSlug, limit = 2, lastEventId = "" }) {
+export async function getEventsByProgram({ programSlug, limit = 2, lastEventId = "" }: {
+    programSlug: any,
+    limit?: number,
+    lastEventId: string,
+}) {
     const sanityClient = createClient(sanityClientConfig);
     
     const events = await sanityClient.fetch(`

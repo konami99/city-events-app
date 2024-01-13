@@ -8,12 +8,12 @@ export default function InfiniteScrollEvents({
     programSlug,
     initialEvents,
     fetchEventsByProgram,
-    config,
+    sanityClientConfig,
 }: {
     programSlug: string,
     initialEvents: any,
     fetchEventsByProgram: any,
-    config: any,
+    sanityClientConfig: any,
 }) {
     const [events, setEvents] = useState(initialEvents);
     const [ref, inView] = useInView();
@@ -43,8 +43,8 @@ export default function InfiniteScrollEvents({
     return (
         <>
             {
-                events.map((event, index) => (
-                    <EventCard key={index} event={event} imageSource={event.mainImage.asset._ref} config={config} />
+                events.map((event: any, index: any) => (
+                    <EventCard key={index} event={event} imageSource={event.mainImage.asset._ref} sanityClientConfig={sanityClientConfig} />
                 ))
             }
             {/* loading spinner */}

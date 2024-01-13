@@ -2,7 +2,7 @@
 
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
 
-export function ChevronLeft({ targetId }) {
+export function ChevronLeft({ targetId }: { targetId: any }) {
     const slideLeft = () => {
         var slider = document.getElementById(targetId);
         slider!.scrollLeft = slider!.scrollLeft - 500;
@@ -11,7 +11,7 @@ export function ChevronLeft({ targetId }) {
     return <MdChevronLeft className="opacity-50 cursor-pointer hover:opacity-100" size={30} onClick={slideLeft} />
 }
 
-export function ChevronRight({ targetId }) {
+export function ChevronRight({ targetId }: { targetId: any }) {
     const slideRight = () => {
         var slider = document.getElementById(targetId);
         slider!.scrollLeft = slider!.scrollLeft + 500;
