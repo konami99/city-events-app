@@ -9,7 +9,7 @@ export async function getEvents({ where, limit = 10, page = 1 }: {
     limit?: number,
     page: number,
 }) {
-    const GRAPHQL_API_URL = process.env.GRAPHQL_API_URL;
+    const GRAPHQL_API_URL = process.env.GRAPHQL_API_URL as string;
     const headers = {
         'content-type': 'application/json',
     }
