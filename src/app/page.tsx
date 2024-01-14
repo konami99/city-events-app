@@ -66,11 +66,11 @@ export default async function Home() {
         <section className="our-picks pt-[6rem] pb-[3rem] bg-white">
           <header className="relative flex flex-col items-center py-4 my-0 mx-[calc(2rem+28.21px)]">
             <div className='subtitle ml-4 w-full text-transform: uppercase text-[0.75rem]'>Fun and educational ideas</div>
-            <div className='title ml-4 w-full text-[1.75rem] text-white flex'>
-              <h2 className='mr-[1rem]'>
+            <div className='title ml-4 w-full text-[1.75rem] text-white flex-column md:flex items-baseline'>
+              <h2 className='w-full md:w-[auto] md:mr-[1rem]'>
                 <span className='text-black'>School holidays</span>
               </h2>
-              <div className='clider-cta text-black text-[1rem] mt-[0.5rem] font-normal leading-[2.3]'>
+              <div className='w-full md:w-[auto] clider-cta text-black text-[1rem] mt-0 md:mt-[0.5rem] font-normal'>
                 <div className='link-with-arrow text-[#0054a6]'>
                   <Link className='flex items-center' href={ `/programs/school-holidays` }>
                     <span>View all</span>
