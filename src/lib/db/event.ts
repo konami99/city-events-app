@@ -9,7 +9,7 @@ export async function getEvents({ where, limit = 10, page = 1 }: {
     limit?: number,
     page: number,
 }) {
-    const GRAPHQL_API_URL = 'https://on7y4gyd.api.sanity.io/v2023-08-01/graphql/production/default';
+    const GRAPHQL_API_URL = process.env.GRAPHQL_API_URL;
     const headers = {
         'content-type': 'application/json',
     }
@@ -56,7 +56,7 @@ export async function getEvents({ where, limit = 10, page = 1 }: {
     return { events: JSON.parse(JSON.stringify(response?.data?.allEvent)) }
 }
 
-export async function getEventsByProgram({ programSlug, limit = 2, lastEventId = "" }: {
+export async function getEventsByProgram({ programSlug, limit = 8, lastEventId = "" }: {
     programSlug: any,
     limit?: number,
     lastEventId: string,
