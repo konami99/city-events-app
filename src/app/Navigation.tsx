@@ -13,7 +13,7 @@ export default function Navigation() {
             </div>
           </div>
           <div className="navbar-center">
-            <a className="btn btn-ghost text-xl" href="/">What's On</a>
+            <a className="btn btn-ghost text-xl" href="/">What&apos;s On</a>
           </div>
           <div className="navbar-end"></div>
         </div>
