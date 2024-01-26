@@ -1,7 +1,6 @@
 import EventCard from '@/components/EventCard'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from '@/components/Chevron'
-import { getEvents } from '@/lib/db/event';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { fetchEvents } from './actions';

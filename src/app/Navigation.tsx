@@ -19,6 +19,7 @@ export default function Navigation() {
                 <details>
                   <summary>Hi { session.user.email }</summary>
                   <ul className="p-2">
+                    <li><a href="/dashboard">Dashboard</a></li>
                     <li><a onClick={() => signOut()}>Log out</a></li>
                   </ul>
                 </details>
