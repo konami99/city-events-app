@@ -9,7 +9,7 @@ export default function Navigation() {
     <div className="navbar bg-base-100">
       <div className="navbar-start"></div>
       <div className="navbar-center">
-        <a className="btn btn-ghost text-xl" href="/">What&apos;s On</a>
+        <a className="btn btn-ghost text-xl" href="/">What&apos;s On Sydney</a>
       </div>
       <div className="navbar-end">
         {
