@@ -19,6 +19,7 @@ export async function getEvents({ where, limit = 10, page = 1 }: {
     const requestBody = {
         query: `query getAllEvents($where: EventFilter) {
                     allEvent(where: $where, limit: ${limit}, offset: ${offset}) {
+                        _id
                         user {
                             name
                         }
@@ -38,6 +39,8 @@ export async function getEvents({ where, limit = 10, page = 1 }: {
                         }
                         descriptionRaw
                         eventOrganiser
+                        _createdAt
+                        _updatedAt
                     }
                 }`,
         variables: {
