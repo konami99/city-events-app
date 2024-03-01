@@ -76,21 +76,35 @@ export default async function Page() {
                             {
                                 data[2].map((event: any) => {
                                     return (
-                                        <div key={event._id} className="dashboard-event-tile grid grid-rows-[1fr_auto_auto] grid-cols-[7.5rem_1fr] gap-1 mt-[1rem] bg-white">
-                                            <div className="dashboard-event-tile-image row-start-1 row-span-1 col-start-1 col-span-2">
+                                        <div key={event._id} className="dashboard-event-tile grid grid-rows-[1fr_auto] grid-cols-[7.5rem_1fr_35%] gap-1 mt-[1rem] bg-white">
+                                            <div className="dashboard-event-tile-image row-start-1 row-span-1 col-start-1 col-span-1">
                                                 <div style={{width: '120px', height: '120px', backgroundImage: `url(${urlFor(event.mainImage.asset._id).width(120).height(120).url()})`}}></div>
                                             </div>
-                                            <div className="dashboard-event-tile-content row-start-1 row-span-2 col-start-2 col-span-1">
+                                            <div className="dashboard-event-tile-content row-start-1 row-span-1 col-start-2 col-span-1">
                                                 <p>Approved</p>
                                                 <h3>{ event.title }</h3>
                                             </div>
-                                            <div className="dashboard-event-tile-meta row-start-2 row-span-2 col-start-2 col-span-1 flex">
-                                                <div className="inner flex">
-                                                    <div className="date">
-                                                        Last modified: { event._updatedAt }
+                                            <div className="dashboard-event-tile-meta row-start-1 row-span-1 col-start-3 col-span-1 flex">
+                                                <div className="inner flex flex-wrap px-[1.25rem] py-[1.5rem]">
+                                                    <div className="date flex flex-[1_1_100%] max-w-[100%] mb-[1.75rem] inline-flex text-right">
+                                                        <p className="w-full">
+                                                            Last modified: { event._updatedAt }
+                                                        </p>
                                                     </div>
-                                                    <div className="buttons">
-                                                        Buttons
+                                                    <div className="buttons flex flex-[1_1_100%] max-w-[100%]">
+                                                        <div className="buttons-inner flex flex-wrap w-full justify-end">
+                                                            <span className="button">
+                                                                <a className="button button--link button--text" title="Edit" href={ `/events/${event.slug.current}/edit` }>
+                                                                    <div className="jsx-2060750500 button_content">
+                                                                        <div className="jsx-2060750500 button_content-wrapper">
+                                                                            <div className="jsx-2060750500 button_content-label">
+                                                                                Edit
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
