@@ -1,11 +1,15 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from 'framer-motion';
 import { z } from 'zod';
+import imageUrlBuilder from '@sanity/image-url'
 import { FormDataSchema } from "@/lib/schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { createClient } from "@sanity/client";
+import { sanityClientConfig } from "@/components/SanityClientConfig";
+import { fetchEvents } from "@/app/actions";
 
 interface EditPageProps {
     params: {
@@ -32,6 +36,7 @@ const steps = [
 export default function EventPage({
     params: { slug }
 }: EditPageProps) {
+    const [events, setEvents] = useState([]);
     const [previousStep, setPreviousStep] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
     const delta = currentStep - previousStep;
@@ -91,6 +96,21 @@ export default function EventPage({
             setCurrentStep(step => step - 1)
         }
     }
+
+    useEffect(() => {
+        fetchEvents({
+            where: {
+                slug: {
+                    current: {
+                        eq: slug,
+                    }
+                }
+            }
+        })
+        .then((data) => {
+            setEvents(data);
+        })
+    }, [])
 
     return (
         <div className="flex flex-col justify-center items-center">
