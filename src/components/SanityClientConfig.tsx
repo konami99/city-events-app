@@ -5,4 +5,5 @@ export const sanityClientConfig: ClientConfig = {
     dataset: process.env.SANITY_DATASET,
     useCdn: process.env.SANITY_USE_CDN === 'true',
     apiVersion: process.env.SANITY_API_VERSION,
+    token: process.env.SANITY_SECRET_TOKEN,
 }

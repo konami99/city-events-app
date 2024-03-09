@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { motion } from 'framer-motion';
 import { z } from 'zod';
 import imageUrlBuilder from '@sanity/image-url'
@@ -10,6 +10,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { createClient } from "@sanity/client";
 import { sanityClientConfig } from "@/components/SanityClientConfig";
 import { fetchEvents } from "@/app/actions";
+import { updateEvent } from "../../actions";
 
 interface EditPageProps {
     params: {
@@ -39,6 +40,7 @@ export default function EventPage({
     const [events, setEvents] = useState([]);
     const [previousStep, setPreviousStep] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
+    const [isPending, startTransition] = useTransition();
     const delta = currentStep - previousStep;
 
     const {
@@ -53,6 +55,7 @@ export default function EventPage({
     })
 
     const processForm: SubmitHandler<Inputs> = data => {
+        /*
         console.log(data)
         fetch('/api', {
             method: 'POST',
@@ -69,8 +72,11 @@ export default function EventPage({
         .catch((error) => {
             console.error(error);
         });
-        
-        reset()
+        */
+        startTransition(async () => {
+            await updateEvent();
+            reset();
+        });
     }
 
     type FieldName = keyof Inputs;
