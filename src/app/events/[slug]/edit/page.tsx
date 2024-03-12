@@ -1,5 +1,8 @@
 'use client'
 
+import React, { useRef } from 'react';
+import { Editor } from '@tinymce/tinymce-react';
+import { Editor as TinyMCEEditor } from 'tinymce';
 import { useEffect, useState, useTransition } from "react";
 import { motion } from 'framer-motion';
 import { z } from 'zod';
@@ -24,7 +27,7 @@ const steps = [
     {
         id: 'Step 1',
         name: 'Personal Info',
-        fields: ['firstName', 'lastName', 'email']
+        fields: ['firstName', 'lastName', 'email', 'description']
     },
     {
         id: 'Step 2',
@@ -41,6 +44,8 @@ export default function EventPage({
     const [previousStep, setPreviousStep] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
     const [isPending, startTransition] = useTransition();
+    const editorRef = useRef<TinyMCEEditor | null>(null);
+
     const delta = currentStep - previousStep;
 
     const {
@@ -49,32 +54,18 @@ export default function EventPage({
         watch,
         reset,
         trigger,
+        setValue,
         formState: { errors }
     } = useForm<Inputs>({
         resolver: zodResolver(FormDataSchema)
     })
 
     const processForm: SubmitHandler<Inputs> = data => {
-        /*
-        console.log(data)
-        fetch('/api', {
-            method: 'POST',
-            cache: 'no-store',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-        */
         startTransition(async () => {
-            await updateEvent();
+            const description = `<html><body>${editorRef.current!.getContent()}</body></html>`;
+            console.log(description);
+
+            await updateEvent(description);
             reset();
         });
     }
@@ -83,6 +74,8 @@ export default function EventPage({
 
     const next = async () => {
         const fields = steps[currentStep].fields
+        setValue('description', editorRef.current!.getContent({ format: 'text' }).length === 0 ? '' : '1');
+
         const output = await trigger(fields as FieldName[], { shouldFocus: true })
 
         if (!output) return
@@ -147,74 +140,100 @@ export default function EventPage({
                     Provide your personal details.
                     </p>
                     <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
-                    <div className='sm:col-span-3'>
-                        <label
-                        htmlFor='firstName'
-                        className='block text-sm font-medium leading-6 text-gray-900'
-                        >
-                        First name
-                        </label>
-                        <div className='mt-2'>
-                        <input
-                            type='text'
-                            id='firstName'
-                            {...register('firstName')}
-                            autoComplete='given-name'
-                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                        />
-                        {errors.firstName?.message && (
-                            <p className='mt-2 text-sm text-red-400'>
-                            {errors.firstName.message}
-                            </p>
-                        )}
+                        <div className='sm:col-span-3'>
+                            <label
+                            htmlFor='firstName'
+                            className='block text-sm font-medium leading-6 text-gray-900'
+                            >
+                            First name
+                            </label>
+                            <div className='mt-2'>
+                            <input
+                                type='text'
+                                id='firstName'
+                                {...register('firstName')}
+                                autoComplete='given-name'
+                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                            />
+                            {errors.firstName?.message && (
+                                <p className='mt-2 text-sm text-red-400'>
+                                {errors.firstName.message}
+                                </p>
+                            )}
+                            </div>
                         </div>
-                    </div>
 
-                    <div className='sm:col-span-3'>
-                        <label
-                        htmlFor='lastName'
-                        className='block text-sm font-medium leading-6 text-gray-900'
-                        >
-                        Last name
-                        </label>
-                        <div className='mt-2'>
-                        <input
-                            type='text'
-                            id='lastName'
-                            {...register('lastName')}
-                            autoComplete='family-name'
-                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                        />
-                        {errors.lastName?.message && (
-                            <p className='mt-2 text-sm text-red-400'>
-                            {errors.lastName.message}
-                            </p>
-                        )}
+                        <div className='sm:col-span-3'>
+                            <label
+                            htmlFor='lastName'
+                            className='block text-sm font-medium leading-6 text-gray-900'
+                            >
+                            Last name
+                            </label>
+                            <div className='mt-2'>
+                            <input
+                                type='text'
+                                id='lastName'
+                                {...register('lastName')}
+                                autoComplete='family-name'
+                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                            />
+                            {errors.lastName?.message && (
+                                <p className='mt-2 text-sm text-red-400'>
+                                {errors.lastName.message}
+                                </p>
+                            )}
+                            </div>
                         </div>
-                    </div>
 
-                    <div className='sm:col-span-4'>
-                        <label
-                        htmlFor='email'
-                        className='block text-sm font-medium leading-6 text-gray-900'
-                        >
-                        Email address
-                        </label>
-                        <div className='mt-2'>
-                        <input
-                            id='email'
-                            type='email'
-                            {...register('email')}
-                            autoComplete='email'
-                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                        />
-                        {errors.email?.message && (
-                            <p className='mt-2 text-sm text-red-400'>
-                            {errors.email.message}
-                            </p>
-                        )}
+                        <div className='sm:col-span-4'>
+                            <label
+                            htmlFor='email'
+                            className='block text-sm font-medium leading-6 text-gray-900'
+                            >
+                            Email address
+                            </label>
+                            <div className='mt-2'>
+                            <input
+                                id='email'
+                                type='email'
+                                {...register('email')}
+                                autoComplete='email'
+                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                            />
+                            {errors.email?.message && (
+                                <p className='mt-2 text-sm text-red-400'>
+                                {errors.email.message}
+                                </p>
+                            )}
+                            </div>
                         </div>
-                    </div>
+                        <div className='sm:col-span-4'>
+                            <div className='mt-2'>
+                                <input id='description' style={{display: 'none'}} {...register('description')} />
+                                <Editor
+                                    id='richtexteditor'
+                                    apiKey='dd5142xewbx5sf8qfurvteyk3iebaz1rru58zmgaz1kug0bq'
+                                    onInit={(evt, editor) => editorRef.current = editor}
+                                    init={{
+                                            plugins: 'autocorrect',
+                                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                                            tinycomments_mode: 'embedded',
+                                            tinycomments_author: 'Author name',
+                                            mergetags_list: [
+                                            { value: 'First.Name', title: 'First Name' },
+                                            { value: 'Email', title: 'Email' },
+                                        ],
+                                    }}
+                                    initialValue="Welcome to TinyMCE!"
+                                />
+                                {errors.description?.message && (
+                                    <p className='mt-2 text-sm text-red-400'>
+                                    {errors.description.message}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
                 )}

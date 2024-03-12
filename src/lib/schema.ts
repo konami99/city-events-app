@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { string, z } from 'zod'
 
 export const FormDataSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -8,5 +8,6 @@ export const FormDataSchema = z.object({
   street: z.string().min(1, 'Street is required'),
   city: z.string().min(1, 'City is required'),
   state: z.string().min(1, 'State is required'),
-  zip: z.string().min(1, 'Zip is required')
+  zip: z.string().min(1, 'Zip is required'),
+  description: z.string().min(1, 'Description is required'),
 })

@@ -7,7 +7,7 @@ import {Schema} from '@sanity/schema'
 import {htmlToBlocks, getBlockContentFeatures} from '@sanity/block-tools'
 import { JSDOM } from 'jsdom';
 
-export async function updateEvent() {
+export async function updateEvent(description: string) {
     const sanityClient = createClient(sanityClientConfig);
 
     const builder = imageUrlBuilder(sanityClient);
@@ -39,7 +39,7 @@ export async function updateEvent() {
         .get('blogPost')
         .fields.find((field: any) => field.name === 'body').type
 
-    const blocks = htmlToBlocks('<html><body><h1>Hello world!</h1><body></html>', blockContentType, {
+    const blocks = htmlToBlocks(description, blockContentType, {
         parseHtml: (html) => new JSDOM(html).window.document,
     })
 
