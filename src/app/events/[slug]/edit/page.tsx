@@ -61,8 +61,12 @@ export default function EventPage({
     })
 
     const processForm: SubmitHandler<Inputs> = data => {
+
+        console.log('data');
+        console.log(data)
+
         startTransition(async () => {
-            const description = `<html><body>${editorRef.current!.getContent()}</body></html>`;
+            const description = `<html><body>${data.description}</body></html>`;
             console.log(description);
 
             await updateEvent(description);
@@ -74,7 +78,10 @@ export default function EventPage({
 
     const next = async () => {
         const fields = steps[currentStep].fields
-        setValue('description', editorRef.current!.getContent({ format: 'text' }).length === 0 ? '' : '1');
+
+        if (currentStep === 0) {
+            setValue('description', editorRef.current!.getContent({ format: 'html' }));
+        }
 
         const output = await trigger(fields as FieldName[], { shouldFocus: true })
 
