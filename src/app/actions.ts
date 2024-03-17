@@ -6,13 +6,15 @@ import { getPrograms } from "@/lib/db/program";
 
 export async function fetchEvents({
     where,
-    page = 1
+    page = 1,
+    limit = 10
 }: {
     where: any,
     page?: number,
+    limit?: number,
 }) {
     
-    const { events } = await getEvents({ where, page });
+    const { events } = await getEvents({ where, page, limit });
     
     return events;
 }

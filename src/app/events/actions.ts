@@ -6,6 +6,7 @@ import { sanityClientConfig } from "@/components/SanityClientConfig";
 import {Schema} from '@sanity/schema'
 import {htmlToBlocks, getBlockContentFeatures} from '@sanity/block-tools'
 import { JSDOM } from 'jsdom';
+import { ulid } from "ulidx";
 
 export async function updateEvent(description: string) {
     const sanityClient = createClient(sanityClientConfig);
@@ -50,9 +51,9 @@ export async function updateEvent(description: string) {
             description: blocks,
             categories: [
                 {
-                    _ref: '69f41835-d4fd-470d-9fde-d65f35898ca7',
+                    _ref: '9a2f7a54-5357-47a5-812a-d33300d7560d',
                     _type: 'reference',
-                    _key: '54aa1d3883dac217dbb4cdc4a7441249',
+                    _key: ulid(),
                 }
             ]
         })

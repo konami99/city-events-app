@@ -26,13 +26,13 @@ type Inputs = z.infer<typeof FormDataSchema>
 const steps = [
     {
         id: 'Step 1',
-        name: 'Personal Info',
-        fields: ['firstName', 'lastName', 'email', 'description']
+        name: 'Event Info',
+        fields: ['title', 'shortDescription', 'description', 'mainImage']
     },
     {
         id: 'Step 2',
-        name: 'Address',
-        fields: ['country', 'state', 'city', 'street', 'zip']
+        name: 'More Event Info',
+        fields: ['startDate', 'endDate', 'eventOrganiser']
     },
     { id: 'Step 3', name: 'Complete' }
 ]
@@ -141,30 +141,29 @@ export default function EventPage({
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                 >
                     <h2 className='text-base font-semibold leading-7 text-gray-900'>
-                    Personal Information
+                    Event Information
                     </h2>
                     <p className='mt-1 text-sm leading-6 text-gray-600'>
-                    Provide your personal details.
+                    Provide event details.
                     </p>
                     <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
                         <div className='sm:col-span-3'>
                             <label
-                            htmlFor='firstName'
+                            htmlFor='title'
                             className='block text-sm font-medium leading-6 text-gray-900'
                             >
-                            First name
+                            Title
                             </label>
                             <div className='mt-2'>
                             <input
                                 type='text'
-                                id='firstName'
-                                {...register('firstName')}
-                                autoComplete='given-name'
+                                id='title'
+                                {...register('title')}
                                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
                             />
-                            {errors.firstName?.message && (
+                            {errors.title?.message && (
                                 <p className='mt-2 text-sm text-red-400'>
-                                {errors.firstName.message}
+                                {errors.title.message}
                                 </p>
                             )}
                             </div>
@@ -172,49 +171,26 @@ export default function EventPage({
 
                         <div className='sm:col-span-3'>
                             <label
-                            htmlFor='lastName'
+                            htmlFor='shortDescription'
                             className='block text-sm font-medium leading-6 text-gray-900'
                             >
-                            Last name
+                            Short Description
                             </label>
                             <div className='mt-2'>
                             <input
                                 type='text'
-                                id='lastName'
-                                {...register('lastName')}
-                                autoComplete='family-name'
+                                id='shortDescription'
+                                {...register('shortDescription')}
                                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
                             />
-                            {errors.lastName?.message && (
+                            {errors.shortDescription?.message && (
                                 <p className='mt-2 text-sm text-red-400'>
-                                {errors.lastName.message}
+                                {errors.shortDescription.message}
                                 </p>
                             )}
                             </div>
                         </div>
 
-                        <div className='sm:col-span-4'>
-                            <label
-                            htmlFor='email'
-                            className='block text-sm font-medium leading-6 text-gray-900'
-                            >
-                            Email address
-                            </label>
-                            <div className='mt-2'>
-                            <input
-                                id='email'
-                                type='email'
-                                {...register('email')}
-                                autoComplete='email'
-                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                            />
-                            {errors.email?.message && (
-                                <p className='mt-2 text-sm text-red-400'>
-                                {errors.email.message}
-                                </p>
-                            )}
-                            </div>
-                        </div>
                         <div className='sm:col-span-4'>
                             <div className='mt-2'>
                                 <input id='description' style={{display: 'none'}} {...register('description')} />
@@ -252,34 +228,33 @@ export default function EventPage({
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                 >
                     <h2 className='text-base font-semibold leading-7 text-gray-900'>
-                    Address
+                    More Event Details
                     </h2>
                     <p className='mt-1 text-sm leading-6 text-gray-600'>
-                    Address where you can receive mail.
+                    More event details.
                     </p>
 
                     <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
                     <div className='sm:col-span-3'>
                         <label
-                        htmlFor='country'
+                        htmlFor='startDate'
                         className='block text-sm font-medium leading-6 text-gray-900'
                         >
-                        Country
+                        Start Date
                         </label>
                         <div className='mt-2'>
                         <select
-                            id='country'
-                            {...register('country')}
-                            autoComplete='country-name'
+                            id='startDate'
+                            {...register('startDate')}
                             className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:max-w-xs sm:text-sm sm:leading-6'
                         >
                             <option>United States</option>
                             <option>Canada</option>
                             <option>Mexico</option>
                         </select>
-                        {errors.country?.message && (
+                        {errors.startDate?.message && (
                             <p className='mt-2 text-sm text-red-400'>
-                            {errors.country.message}
+                            {errors.startDate.message}
                             </p>
                         )}
                         </div>
@@ -287,22 +262,21 @@ export default function EventPage({
 
                     <div className='col-span-full'>
                         <label
-                        htmlFor='street'
+                        htmlFor='endDate'
                         className='block text-sm font-medium leading-6 text-gray-900'
                         >
-                        Street address
+                        End Date
                         </label>
                         <div className='mt-2'>
                         <input
                             type='text'
-                            id='street'
-                            {...register('street')}
-                            autoComplete='street-address'
+                            id='endDate'
+                            {...register('endDate')}
                             className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
                         />
-                        {errors.street?.message && (
+                        {errors.endDate?.message && (
                             <p className='mt-2 text-sm text-red-400'>
-                            {errors.street.message}
+                            {errors.endDate.message}
                             </p>
                         )}
                         </div>
@@ -310,68 +284,21 @@ export default function EventPage({
 
                     <div className='sm:col-span-2 sm:col-start-1'>
                         <label
-                        htmlFor='city'
+                        htmlFor='eventOrganiser'
                         className='block text-sm font-medium leading-6 text-gray-900'
                         >
-                        City
+                        Event Organiser
                         </label>
                         <div className='mt-2'>
                         <input
                             type='text'
-                            id='city'
-                            {...register('city')}
-                            autoComplete='address-level2'
+                            id='eventOrganiser'
+                            {...register('eventOrganiser')}
                             className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
                         />
-                        {errors.city?.message && (
+                        {errors.eventOrganiser?.message && (
                             <p className='mt-2 text-sm text-red-400'>
-                            {errors.city.message}
-                            </p>
-                        )}
-                        </div>
-                    </div>
-
-                    <div className='sm:col-span-2'>
-                        <label
-                        htmlFor='state'
-                        className='block text-sm font-medium leading-6 text-gray-900'
-                        >
-                        State / Province
-                        </label>
-                        <div className='mt-2'>
-                        <input
-                            type='text'
-                            id='state'
-                            {...register('state')}
-                            autoComplete='address-level1'
-                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                        />
-                        {errors.state?.message && (
-                            <p className='mt-2 text-sm text-red-400'>
-                            {errors.state.message}
-                            </p>
-                        )}
-                        </div>
-                    </div>
-
-                    <div className='sm:col-span-2'>
-                        <label
-                        htmlFor='zip'
-                        className='block text-sm font-medium leading-6 text-gray-900'
-                        >
-                        ZIP / Postal code
-                        </label>
-                        <div className='mt-2'>
-                        <input
-                            type='text'
-                            id='zip'
-                            {...register('zip')}
-                            autoComplete='postal-code'
-                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                        />
-                        {errors.zip?.message && (
-                            <p className='mt-2 text-sm text-red-400'>
-                            {errors.zip.message}
+                            {errors.eventOrganiser.message}
                             </p>
                         )}
                         </div>

@@ -17,8 +17,10 @@ export default async function Page() {
             status: {
                 eq: 'draft'
             }
-        }
+        },
+        limit: 100,
     })
+
     const pendingEventsPromise = fetchEvents({
         where: {
             user: {
@@ -29,8 +31,10 @@ export default async function Page() {
             status: {
                 eq: 'pending'
             }
-        }
+        },
+        limit: 100,
     })
+    
     const approvedEventsPromise = fetchEvents({
         where: {
             user: {
@@ -41,7 +45,8 @@ export default async function Page() {
             status: {
                 eq: 'approved'
             }
-        }
+        },
+        limit: 100,
     })
     
     const data = await Promise.all([
