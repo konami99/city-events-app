@@ -14,6 +14,7 @@ import { createClient } from "@sanity/client";
 import { sanityClientConfig } from "@/components/SanityClientConfig";
 import { fetchEvents } from "@/app/actions";
 import { updateEvent } from "../../actions";
+import Dropzone from '@/components/Dropzone';
 
 interface EditPageProps {
     params: {
@@ -45,6 +46,7 @@ export default function EventPage({
     const [currentStep, setCurrentStep] = useState(0);
     const [isPending, startTransition] = useTransition();
     const editorRef = useRef<TinyMCEEditor | null>(null);
+    const [files, setFiles] = useState<File[]>([])
 
     const delta = currentStep - previousStep;
 
@@ -61,16 +63,23 @@ export default function EventPage({
     })
 
     const processForm: SubmitHandler<Inputs> = data => {
-
-        console.log('data');
-        console.log(data)
-
         startTransition(async () => {
             const description = `<html><body>${data.description}</body></html>`;
-            console.log(description);
+            
+            const formData = new FormData()
+            formData.append('file', files[0])
+
+            fetch("/api", {
+                method: "POST",
+                body: formData,
+              })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error(error));
 
             await updateEvent(description);
             reset();
+            
         });
     }
 
@@ -146,6 +155,9 @@ export default function EventPage({
                     <p className='mt-1 text-sm leading-6 text-gray-600'>
                     Provide event details.
                     </p>
+
+                    <Dropzone className={ 'mt-10 border border-neutral-200 p-16' } files={files} setFiles={setFiles} />
+
                     <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
                         <div className='sm:col-span-3'>
                             <label
