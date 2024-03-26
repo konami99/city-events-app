@@ -38,6 +38,10 @@ const steps = [
     { id: 'Step 3', name: 'Complete' }
 ]
 
+type FileType = File & {
+    preview: string;
+}
+
 export default function EventPage({
     params: { slug }
 }: EditPageProps) {
@@ -46,7 +50,7 @@ export default function EventPage({
     const [currentStep, setCurrentStep] = useState(0);
     const [isPending, startTransition] = useTransition();
     const editorRef = useRef<TinyMCEEditor | null>(null);
-    const [files, setFiles] = useState<File[]>([])
+    const [files, setFiles] = useState<FileType[]>([])
 
     const delta = currentStep - previousStep;
 
@@ -211,7 +215,6 @@ export default function EventPage({
                                     apiKey='dd5142xewbx5sf8qfurvteyk3iebaz1rru58zmgaz1kug0bq'
                                     onInit={(evt, editor) => editorRef.current = editor}
                                     init={{
-                                            plugins: 'autocorrect',
                                             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
                                             tinycomments_mode: 'embedded',
                                             tinycomments_author: 'Author name',

@@ -5,9 +5,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { ArrowUpTrayIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
-interface FileProps {
-    name: string;
-    preview: string;
+type FileType = File & {
+  preview: string;
 }
 
 interface Error {
@@ -16,14 +15,14 @@ interface Error {
 }
 
 interface RejectedFileProps {
-    file: FileProps,
+    file: FileType,
     errors: Error[];
 }
 
 interface DropzoneProps {
     className: string,
-    files: FileProps[],
-    setFiles: React.Dispatch<React.SetStateAction<FileProps[]>>
+    files: FileType[],
+    setFiles: React.Dispatch<React.SetStateAction<FileType[]>>
 }
 
 const Dropzone = ({ className, files, setFiles }: DropzoneProps) => {
