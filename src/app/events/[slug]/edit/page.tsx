@@ -131,6 +131,19 @@ export default function EventPage({
         })
     }, [])
 
+    
+    useEffect(() => {
+        fetch("https://cdn.sanity.io/images/on7y4gyd/production/83ab7e260d29c6b38cbf739db2294740ea1d15be-1200x1006.webp")
+            .then(response => response.blob())
+            .then(blob => {
+                const f = new File([blob], "image");
+                const url = URL.createObjectURL(f);
+                setFiles([
+                    Object.assign(f, { preview: url })
+                ])
+            })
+    }, [])
+
     return (
         <div className="flex flex-col justify-center items-center">
             <ul className="steps">
