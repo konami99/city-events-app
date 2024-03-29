@@ -15,6 +15,7 @@ import { sanityClientConfig } from "@/components/SanityClientConfig";
 import { fetchEvents } from "@/app/actions";
 import { updateEvent } from "../../actions";
 import Dropzone from '@/components/Dropzone';
+import {toHTML} from '@portabletext/to-html'
 
 type Inputs = z.infer<typeof FormDataSchema>
 
@@ -37,12 +38,16 @@ type FileType = File & {
 }
 
 export default function StepForm({ event }: { event: any }) {
-    const [events, setEvents] = useState([]);
     const [previousStep, setPreviousStep] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
     const [isPending, startTransition] = useTransition();
     const editorRef = useRef<TinyMCEEditor | null>(null);
     const [files, setFiles] = useState<FileType[]>([])
+
+    //console.log(`event in step form`, event);
+
+    const descriptionInHtml = toHTML(event.descriptionRaw);
+    //console.log(`descriptionInHtml`, descriptionInHtml)
 
     const delta = currentStep - previousStep;
 
@@ -74,6 +79,9 @@ export default function StepForm({ event }: { event: any }) {
                 .catch(error => console.error(error));
 
             await updateEvent(description);
+
+            files.forEach(file => URL.revokeObjectURL(file.preview))
+
             reset();
             
         });
@@ -109,10 +117,10 @@ export default function StepForm({ event }: { event: any }) {
     }
     
     useEffect(() => {
-        fetch("https://cdn.sanity.io/images/on7y4gyd/production/83ab7e260d29c6b38cbf739db2294740ea1d15be-1200x1006.webp")
+        fetch(event.mainImage.asset.url)
             .then(response => response.blob())
             .then(blob => {
-                const f = new File([blob], "image");
+                const f = new File([blob], "mainImage");
                 const url = URL.createObjectURL(f);
                 setFiles([
                     Object.assign(f, { preview: url })
@@ -164,6 +172,7 @@ export default function StepForm({ event }: { event: any }) {
                                 type='text'
                                 id='title'
                                 {...register('title')}
+                                value={ event.title }
                                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
                             />
                             {errors.title?.message && (
@@ -185,6 +194,7 @@ export default function StepForm({ event }: { event: any }) {
                             <input
                                 type='text'
                                 id='shortDescription'
+                                value={ event.shortDescription }
                                 {...register('shortDescription')}
                                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
                             />
@@ -212,7 +222,7 @@ export default function StepForm({ event }: { event: any }) {
                                             { value: 'Email', title: 'Email' },
                                         ],
                                     }}
-                                    initialValue="Welcome to TinyMCE!"
+                                    initialValue={ descriptionInHtml }
                                 />
                                 {errors.description?.message && (
                                     <p className='mt-2 text-sm text-red-400'>

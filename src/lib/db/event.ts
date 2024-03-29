@@ -35,10 +35,15 @@ export async function getEvents({ where, limit = 10, page = 1 }: {
                         mainImage {
                             asset {
                                 _id
+                                url
+                                source {
+                                    url
+                                }
                             }
                         }
                         descriptionRaw
                         eventOrganiser
+                        shortDescription
                         _createdAt
                         _updatedAt
                     }

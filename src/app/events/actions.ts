@@ -4,7 +4,7 @@ import { createClient } from "@sanity/client";
 import imageUrlBuilder from '@sanity/image-url';
 import { sanityClientConfig } from "@/components/SanityClientConfig";
 import {Schema} from '@sanity/schema'
-import {htmlToBlocks, getBlockContentFeatures} from '@sanity/block-tools'
+import {htmlToBlocks} from '@sanity/block-tools'
 import { JSDOM } from 'jsdom';
 import { ulid } from "ulidx";
 

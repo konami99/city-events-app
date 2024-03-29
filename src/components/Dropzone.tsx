@@ -51,11 +51,6 @@ const Dropzone = ({ className, files, setFiles }: DropzoneProps) => {
     onDrop
   })
 
-  useEffect(() => {
-    // Revoke the data uris to avoid memory leaks
-    return () => files.forEach(file => URL.revokeObjectURL(file.preview))
-  }, [files])
-
   const removeFile = (name: any) => {
     setFiles(files => files.filter(file => file.name !== name))
   }
@@ -112,9 +107,6 @@ const Dropzone = ({ className, files, setFiles }: DropzoneProps) => {
                 alt={file.name}
                 width={100}
                 height={100}
-                onLoad={() => {
-                  URL.revokeObjectURL(file.preview)
-                }}
                 className='h-full w-full rounded-md object-contain'
               />
               <button
