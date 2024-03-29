@@ -7,6 +7,7 @@ import {Schema} from '@sanity/schema'
 import {htmlToBlocks} from '@sanity/block-tools'
 import { JSDOM } from 'jsdom';
 import { ulid } from "ulidx";
+import { revalidatePath } from "next/cache";
 
 export async function updateEvent(description: string) {
     const sanityClient = createClient(sanityClientConfig);
@@ -65,4 +66,7 @@ export async function updateEvent(description: string) {
         .catch((err) => {
             console.error('Oh no, the update failed: ', err.message)
         });
+
+    revalidatePath("/events/[slug]");
+    revalidatePath("/events/[slug]/edit");
 }
