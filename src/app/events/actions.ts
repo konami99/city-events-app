@@ -67,6 +67,6 @@ export async function updateEvent(description: string) {
             console.error('Oh no, the update failed: ', err.message)
         });
 
-    revalidatePath("/events/[slug]");
-    revalidatePath("/events/[slug]/edit");
+    revalidatePath("/events/[slug]", "page");
+    revalidatePath("/events/[slug]/edit", "page");
 }
