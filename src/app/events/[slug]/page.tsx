@@ -4,16 +4,11 @@ import CategoryTag from "@/components/CategoryTag";
 import {PortableText} from '@portabletext/react'
 import { fetchEvents } from "@/app/actions";
 import { createClient } from '@sanity/client'
-
-interface EventPageProps {
-    params: {
-        slug: string,
-    }
-}
+import { PageProps } from "@/lib/helpers";
 
 export default async function EventPage({
     params: { slug }
-}: EventPageProps) {
+}: PageProps) {
     const sanityClient = createClient(sanityClientConfig);
 
     const builder = imageUrlBuilder(sanityClient)

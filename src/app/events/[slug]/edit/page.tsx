@@ -1,15 +1,10 @@
 import { fetchEvents } from "@/app/actions";
 import StepForm from "./step_form";
-
-interface EditPageProps {
-    params: {
-        slug: string,
-    }
-}
+import { PageProps } from "@/lib/helpers";
 
 export default async function EventPage({
     params: { slug }
-}: EditPageProps) {
+}: PageProps) {
 
     const events = await fetchEvents({
         where: {

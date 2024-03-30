@@ -5,16 +5,11 @@ import { sanityClientConfig } from "@/components/SanityClientConfig";
 import { createClient, type ClientConfig } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url';
 import { v4 as uuid } from 'uuid';
-
-interface ProgramPageProps {
-    params: {
-        slug: string,
-    }
-}
+import { PageProps } from "@/lib/helpers";
 
 export default async function ProgramPage({
     params: { slug }
-}: ProgramPageProps) {
+}: PageProps) {
     const sanityClient = createClient(sanityClientConfig);
 
     const builder = imageUrlBuilder(sanityClient)
