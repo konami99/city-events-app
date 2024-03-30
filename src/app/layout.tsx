@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Footer from './Footer'
-import Navigation from './Navigation'
+import Navigation from '../components/Navigation'
 import SessionProvider from './provider'
 import { getServerSession } from 'next-auth';
 

@@ -15,7 +15,8 @@ import { sanityClientConfig } from "@/components/SanityClientConfig";
 import { fetchEvents } from "@/app/actions";
 import { updateEvent } from "../../actions";
 import Dropzone from '@/components/Dropzone';
-import {toHTML} from '@portabletext/to-html'
+import { toHTML } from '@portabletext/to-html'
+import { FileType } from '@/lib/helpers';
 
 type Inputs = z.infer<typeof FormDataSchema>
 
@@ -32,10 +33,6 @@ const steps = [
     },
     { id: 'Step 3', name: 'Complete' }
 ]
-
-type FileType = File & {
-    preview: string;
-}
 
 export default function StepForm({ event }: { event: any }) {
     const [previousStep, setPreviousStep] = useState(0);
