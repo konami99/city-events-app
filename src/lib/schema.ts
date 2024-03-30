@@ -8,3 +8,11 @@ export const FormDataSchema = z.object({
   endDate: z.string().min(1, 'End date is required'),
   eventOrganiser: z.string().min(1, 'Event organiser is required'),
 })
+
+export type ValidFieldNames =
+  | "title"
+  | "shortDescription"
+  | "description"
+  | "startDate"
+  | "endDate"
+  | "eventOrganiser";

@@ -17,6 +17,7 @@ import { updateEvent } from "../../actions";
 import Dropzone from '@/components/Dropzone';
 import { toHTML } from '@portabletext/to-html'
 import { FileType } from '@/lib/helpers';
+import { ValidFieldNames } from '@/lib/schema';
 
 type Inputs = z.infer<typeof FormDataSchema>
 
@@ -50,6 +51,7 @@ export default function StepForm({ event }: { event: any }) {
         reset,
         trigger,
         setValue,
+        setError,
         formState: { errors }
     } = useForm<Inputs>({
         resolver: zodResolver(FormDataSchema)
@@ -57,8 +59,6 @@ export default function StepForm({ event }: { event: any }) {
 
     const processForm: SubmitHandler<Inputs> = data => {
         startTransition(async () => {
-            const description = `<html><body>${data.description}</body></html>`;
-            
             const formData = new FormData()
             formData.append('file', files[0])
 
@@ -70,12 +70,30 @@ export default function StepForm({ event }: { event: any }) {
                 .then(data => console.log(data))
                 .catch(error => console.error(error));
 
-            await updateEvent(description);
+            const response = await updateEvent(data);
 
-            files.forEach(file => URL.revokeObjectURL(file.preview))
+            if (response === undefined) {
+                files.forEach(file => URL.revokeObjectURL(file.preview))
+                reset();
+            } else {
+                const fieldErrorMapping: Record<string, ValidFieldNames> = {
+                    title: "title",
+                    shortDescription: "shortDescription",
+                    description: "description",
+                    startDate: "startDate",
+                    endDate: "endDate",
+                    eventOrganiser: "eventOrganiser",
+                };
 
-            reset();
-            
+                const errorArray = Object.entries(response.errors);
+                
+                errorArray.forEach(([field, messages]) => {
+                    setError(fieldErrorMapping[field], {
+                        type: "server",
+                        message: messages[0],
+                    });
+                })
+            }
         });
     }
 
