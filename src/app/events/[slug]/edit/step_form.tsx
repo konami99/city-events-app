@@ -18,6 +18,9 @@ import Dropzone from '@/components/Dropzone';
 import { toHTML } from '@portabletext/to-html'
 import { FileType } from '@/lib/helpers';
 import { ValidFieldNames } from '@/lib/schema';
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 type Inputs = z.infer<typeof FormDataSchema>
 
@@ -43,6 +46,7 @@ export default function StepForm({ event }: { event: any }) {
     const [files, setFiles] = useState<FileType[]>([])
     const descriptionInHtml = toHTML(event.descriptionRaw);
     const delta = currentStep - previousStep;
+    const [endDate, setEndDate] = useState(new Date());
 
     const {
         register,
@@ -137,6 +141,13 @@ export default function StepForm({ event }: { event: any }) {
                 ])
             })
     }, [])
+
+    console.log(`enddate`, endDate);
+
+    const handleDateChange = (date: Date) => {
+        setValue('endDate', date);
+        setEndDate(date);
+    }
 
     return (
         <div className="flex flex-col justify-center items-center">
@@ -295,9 +306,11 @@ export default function StepForm({ event }: { event: any }) {
                         <input
                             type='text'
                             id='endDate'
+                            style={{display: 'none'}}
                             {...register('endDate')}
                             className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
                         />
+                        <DatePicker selected={endDate} onChange={handleDateChange} />
                         {errors.endDate?.message && (
                             <p className='mt-2 text-sm text-red-400'>
                             {errors.endDate.message}

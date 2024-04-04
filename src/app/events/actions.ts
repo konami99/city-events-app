@@ -62,7 +62,8 @@ export async function updateEvent(data: any) {
                         _type: 'reference',
                         _key: ulid(),
                     }
-                ]
+                ],
+                endDate: data.endDate,
             })
             .commit()
             .then((updatedEvent) => {
