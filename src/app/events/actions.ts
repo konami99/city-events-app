@@ -64,6 +64,7 @@ export async function updateEvent(data: any) {
                     }
                 ],
                 endDate: data.endDate,
+                startDate: data.startDate,
             })
             .commit()
             .then((updatedEvent) => {
