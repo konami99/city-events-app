@@ -75,7 +75,7 @@ export default function StepForm({ event }: { event: any }) {
                 .then(data => console.log(data))
                 .catch(error => console.error(error));
 
-            const response = await updateEvent(data);
+            const response = await updateEvent(event._id, data);
 
             if (response === undefined) {
                 files.forEach(file => URL.revokeObjectURL(file.preview))

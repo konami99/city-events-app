@@ -10,7 +10,7 @@ import { ulid } from "ulidx";
 import { revalidatePath } from "next/cache";
 import { FormDataSchema } from "@/lib/schema";
 
-export async function updateEvent(data: any) {
+export async function updateEvent(id: string, data: any) {
     const result = FormDataSchema.safeParse(data);
 
     if (result.success) {
@@ -52,9 +52,9 @@ export async function updateEvent(data: any) {
         })
 
         sanityClient
-            .patch('ff570c65-1d27-4b77-809c-7aed7bab8c0c')
+            .patch(id)
             .set({
-                eventOrganiser: 'Ethan Chou',
+                eventOrganiser: data.eventOrganiser,
                 description: blocks,
                 categories: [
                     {
@@ -63,6 +63,8 @@ export async function updateEvent(data: any) {
                         _key: ulid(),
                     }
                 ],
+                title: data.title,
+                shortDescription: data.shortDescription,
                 endDate: data.endDate,
                 startDate: data.startDate,
             })
