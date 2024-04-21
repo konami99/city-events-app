@@ -96,7 +96,7 @@ const Dropzone = ({ className, files, setFiles }: DropzoneProps) => {
         <h3 className='title mt-10 border-b pb-3 text-lg font-semibold text-stone-600'>
           Accepted Files
         </h3>
-        <ul className='mt-6 grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
+        <ul className='mt-6 grid grid-cols-1 xl:gap-10 xl:grid-cols-4'>
           {files.map(file => (
             <li key={file.name} className='relative h-32 rounded-md shadow-lg'>
               <Image

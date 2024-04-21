@@ -6,13 +6,9 @@ import { Editor as TinyMCEEditor } from 'tinymce';
 import { useEffect, useState, useTransition } from "react";
 import { motion } from 'framer-motion';
 import { z } from 'zod';
-import imageUrlBuilder from '@sanity/image-url'
 import { FormDataSchema } from "@/lib/schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { createClient } from "@sanity/client";
-import { sanityClientConfig } from "@/components/SanityClientConfig";
-import { fetchEvents } from "@/app/actions";
 import { updateEvent } from "../../actions";
 import Dropzone from '@/components/Dropzone';
 import { toHTML } from '@portabletext/to-html'
@@ -46,8 +42,8 @@ export default function StepForm({ event }: { event: any }) {
     const [files, setFiles] = useState<FileType[]>([])
     const descriptionInHtml = toHTML(event.descriptionRaw);
     const delta = currentStep - previousStep;
-    const [endDate, setEndDate] = useState(new Date());
-    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date(event.endDate));
+    const [startDate, setStartDate] = useState(new Date(event.startDate));
 
     const {
         register,
@@ -132,6 +128,9 @@ export default function StepForm({ event }: { event: any }) {
     }
     
     useEffect(() => {
+        setValue('endDate', endDate);
+        setValue('startDate', startDate);
+
         fetch(event.mainImage.asset.url)
             .then(response => response.blob())
             .then(blob => {
@@ -142,8 +141,6 @@ export default function StepForm({ event }: { event: any }) {
                 ])
             })
     }, [])
-
-    console.log(`enddate`, endDate);
 
     const handleEndDateChange = (date: Date) => {
         setValue('endDate', date);
@@ -170,7 +167,7 @@ export default function StepForm({ event }: { event: any }) {
             </ul>
 
             {/* Form */}
-            <form className='mt-12 py-12' onSubmit={handleSubmit(processForm)}>
+            <form className='mx-96 py-12' onSubmit={handleSubmit(processForm)}>
                 {currentStep === 0 && (
                 <motion.div
                     initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
@@ -184,10 +181,19 @@ export default function StepForm({ event }: { event: any }) {
                     Provide event details.
                     </p>
 
-                    <Dropzone className={ 'mt-10 border border-neutral-200 p-16' } files={files} setFiles={setFiles} />
-
                     <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
-                        <div className='sm:col-span-3'>
+                        <div className='col-span-full'>
+                            <label
+                            htmlFor='mainImage'
+                            className='block text-sm font-medium leading-6 text-gray-900'
+                            >
+                            Main Image
+                            </label>
+
+                            <Dropzone className={ 'mt-10 border border-neutral-200 p-16' } files={files} setFiles={setFiles} />
+                        </div>
+                        
+                        <div className='col-span-full'>
                             <label
                             htmlFor='title'
                             className='block text-sm font-medium leading-6 text-gray-900'
@@ -210,7 +216,7 @@ export default function StepForm({ event }: { event: any }) {
                             </div>
                         </div>
 
-                        <div className='sm:col-span-3'>
+                        <div className='col-span-full'>
                             <label
                             htmlFor='shortDescription'
                             className='block text-sm font-medium leading-6 text-gray-900'
@@ -233,7 +239,7 @@ export default function StepForm({ event }: { event: any }) {
                             </div>
                         </div>
 
-                        <div className='sm:col-span-4'>
+                        <div className='col-span-full'>
                             <div className='mt-2'>
                                 <input id='description' style={{display: 'none'}} {...register('description')} />
                                 <Editor
@@ -275,76 +281,77 @@ export default function StepForm({ event }: { event: any }) {
                     More event details.
                     </p>
 
-                    <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
-                    <div className='sm:col-span-3'>
-                        <label
-                        htmlFor='startDate'
-                        className='block text-sm font-medium leading-6 text-gray-900'
-                        >
-                        Start Date
-                        </label>
-                        <div className='mt-2'>
-                        <input
-                            type='text'
-                            id='startDate'
-                            style={{display: 'none'}}
-                            {...register('startDate')}
-                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                        />
-                        <DatePicker selected={startDate} onChange={handleStartDateChange} />
-                        {errors.startDate?.message && (
-                            <p className='mt-2 text-sm text-red-400'>
-                            {errors.startDate.message}
-                            </p>
-                        )}
+                    <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8'>
+                        <div>
+                            <label
+                            htmlFor='startDate'
+                            className='block text-sm font-medium leading-6 text-gray-900'
+                            >
+                            Start Date
+                            </label>
+                            <div className='mt-2'>
+                                <input
+                                    type='text'
+                                    id='startDate'
+                                    style={{display: 'none'}}
+                                    {...register('startDate')}
+                                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                                />
+                                <DatePicker selected={startDate} onChange={handleStartDateChange} />
+                                {errors.startDate?.message && (
+                                    <p className='mt-2 text-sm text-red-400'>
+                                    {errors.startDate.message}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                    </div>
 
-                    <div className='col-span-full'>
-                        <label
-                        htmlFor='endDate'
-                        className='block text-sm font-medium leading-6 text-gray-900'
-                        >
-                        End Date
-                        </label>
-                        <div className='mt-2'>
-                        <input
-                            type='text'
-                            id='endDate'
-                            style={{display: 'none'}}
-                            {...register('endDate')}
-                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                        />
-                        <DatePicker selected={endDate} onChange={handleEndDateChange} />
-                        {errors.endDate?.message && (
-                            <p className='mt-2 text-sm text-red-400'>
-                            {errors.endDate.message}
-                            </p>
-                        )}
+                        <div>
+                            <label
+                            htmlFor='endDate'
+                            className='block text-sm font-medium leading-6 text-gray-900'
+                            >
+                            End Date
+                            </label>
+                            <div className='mt-2'>
+                                <input
+                                    type='text'
+                                    id='endDate'
+                                    style={{display: 'none'}}
+                                    {...register('endDate')}
+                                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                                />
+                                <DatePicker selected={endDate} onChange={handleEndDateChange} />
+                                {errors.endDate?.message && (
+                                    <p className='mt-2 text-sm text-red-400'>
+                                    {errors.endDate.message}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                    </div>
 
-                    <div className='sm:col-span-2 sm:col-start-1'>
-                        <label
-                        htmlFor='eventOrganiser'
-                        className='block text-sm font-medium leading-6 text-gray-900'
-                        >
-                        Event Organiser
-                        </label>
-                        <div className='mt-2'>
-                        <input
-                            type='text'
-                            id='eventOrganiser'
-                            {...register('eventOrganiser')}
-                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                        />
-                        {errors.eventOrganiser?.message && (
-                            <p className='mt-2 text-sm text-red-400'>
-                            {errors.eventOrganiser.message}
-                            </p>
-                        )}
+                        <div>
+                            <label
+                            htmlFor='eventOrganiser'
+                            className='block text-sm font-medium leading-6 text-gray-900'
+                            >
+                            Event Organiser
+                            </label>
+                            <div className='mt-2'>
+                                <input
+                                    type='text'
+                                    id='eventOrganiser'
+                                    value={event.eventOrganiser}
+                                    {...register('eventOrganiser')}
+                                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                                />
+                                {errors.eventOrganiser?.message && (
+                                    <p className='mt-2 text-sm text-red-400'>
+                                    {errors.eventOrganiser.message}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </motion.div>
                 )}
@@ -362,7 +369,7 @@ export default function StepForm({ event }: { event: any }) {
             </form>
 
             {/* Navigation */}
-            <div className='mt-8 pt-5'>
+            <div className='my-8 pt-5'>
                 <div className='flex justify-between'>
                     <button
                         type='button'
