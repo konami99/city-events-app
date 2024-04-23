@@ -15,7 +15,6 @@ import { toHTML } from '@portabletext/to-html'
 import { FileType } from '@/lib/helpers';
 import { ValidFieldNames } from '@/lib/schema';
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
 
 type Inputs = z.infer<typeof FormDataSchema>
@@ -167,7 +166,7 @@ export default function StepForm({ event }: { event: any }) {
             </ul>
 
             {/* Form */}
-            <form className='mx-96 py-12' onSubmit={handleSubmit(processForm)}>
+            <form className='mx-96 py-12 min-w-[30%]' onSubmit={handleSubmit(processForm)}>
                 {currentStep === 0 && (
                 <motion.div
                     initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
@@ -281,7 +280,7 @@ export default function StepForm({ event }: { event: any }) {
                     More event details.
                     </p>
 
-                    <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8'>
+                    <div className='mt-10 grid gap-x-6 gap-y-8'>
                         <div>
                             <label
                             htmlFor='startDate'
@@ -297,7 +296,7 @@ export default function StepForm({ event }: { event: any }) {
                                     {...register('startDate')}
                                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
                                 />
-                                <DatePicker selected={startDate} onChange={handleStartDateChange} />
+                                <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" selected={startDate} onChange={handleStartDateChange} />
                                 {errors.startDate?.message && (
                                     <p className='mt-2 text-sm text-red-400'>
                                     {errors.startDate.message}
@@ -321,7 +320,7 @@ export default function StepForm({ event }: { event: any }) {
                                     {...register('endDate')}
                                     className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
                                 />
-                                <DatePicker selected={endDate} onChange={handleEndDateChange} />
+                                <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" selected={endDate} onChange={handleEndDateChange} />
                                 {errors.endDate?.message && (
                                     <p className='mt-2 text-sm text-red-400'>
                                     {errors.endDate.message}
