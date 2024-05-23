@@ -1,6 +1,7 @@
 "use client";
 
 import { useSession, signIn, signOut } from "next-auth/react";
+import handleSignOut from "./SignOut";
 
 export default function Navigation() {
   const { data: session } = useSession();
@@ -20,7 +21,7 @@ export default function Navigation() {
                   <summary>Hi { session.user.email }</summary>
                   <ul className="p-2">
                     <li><a href="/dashboard">Dashboard</a></li>
-                    <li><a onClick={() => signOut()}>Log out</a></li>
+                    <li><a onClick={() => handleSignOut()}>Log out</a></li>
                   </ul>
                 </details>
               </li>
