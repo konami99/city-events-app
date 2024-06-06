@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { FormDataSchema } from "@/lib/schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { updateEvent } from "../../actions";
+import { updateEvent } from "../app/events/actions";
 import Dropzone from '@/components/Dropzone';
 import { toHTML } from '@portabletext/to-html'
 import { FileType } from '@/lib/helpers';
@@ -39,6 +39,8 @@ export default function StepForm({ event }: { event: any }) {
     const [isPending, startTransition] = useTransition();
     const editorRef = useRef<TinyMCEEditor | null>(null);
     const [files, setFiles] = useState<FileType[]>([])
+
+    console.log(event);
     const descriptionInHtml = toHTML(event.descriptionRaw);
     const delta = currentStep - previousStep;
     const [endDate, setEndDate] = useState(new Date(event.endDate));

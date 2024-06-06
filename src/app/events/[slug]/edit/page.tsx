@@ -1,5 +1,5 @@
 import { fetchEvents } from "@/app/actions";
-import StepForm from "./step_form";
+import StepForm from "@/components/StepForm";
 import { PageProps } from "@/lib/helpers";
 
 export default async function EventPage({
