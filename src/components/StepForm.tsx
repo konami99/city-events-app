@@ -33,7 +33,7 @@ const steps = [
     { id: 'Step 3', name: 'Complete' }
 ]
 
-export default function StepForm({ event }: { event: any }) {
+export default function StepForm({ event, action }: { event: any, action: any }) {
     const [previousStep, setPreviousStep] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
     const [isPending, startTransition] = useTransition();
@@ -64,15 +64,9 @@ export default function StepForm({ event }: { event: any }) {
             const formData = new FormData()
             formData.append('file', files[0])
 
-            fetch("/api", {
-                method: "POST",
-                body: formData,
-              })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.error(error));
+            
 
-            const response = await updateEvent(event._id, data);
+            const response: { errors: string } = await action(event._id, data, formData);
 
             if (response === undefined) {
                 files.forEach(file => URL.revokeObjectURL(file.preview))

@@ -10,10 +10,18 @@ import { ulid } from "ulidx";
 import { revalidatePath } from "next/cache";
 import { FormDataSchema } from "@/lib/schema";
 
-export async function updateEvent(id: string, data: any) {
+export async function updateEvent(id: string, data: any, formData: FormData) {
     const result = FormDataSchema.safeParse(data);
 
     if (result.success) {
+        fetch(`${process.env.NEXTAUTH_URL}/api`, {
+            method: "POST",
+            body: formData,
+          })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+
         const description = `<html><body>${data.description}</body></html>`;
 
         const sanityClient = createClient(sanityClientConfig);

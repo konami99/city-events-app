@@ -1,6 +1,7 @@
 import { fetchEvents } from "@/app/actions";
 import StepForm from "@/components/StepForm";
 import { PageProps } from "@/lib/helpers";
+import { updateEvent } from "../../actions";
 
 export default async function EventPage({
     params: { slug }
@@ -18,7 +19,7 @@ export default async function EventPage({
 
     return (
         <>
-            <StepForm event={ events[0] } />
+            <StepForm event={ events[0] } action={ updateEvent } />
         </>
     )
 }
