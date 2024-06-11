@@ -1,7 +1,7 @@
 import { fetchEvents } from "@/app/actions";
 import StepForm from "@/components/StepForm";
 import { PageProps } from "@/lib/helpers";
-import { updateEvent } from "../../actions";
+import { updateEvent } from "@/app/actions";
 
 export default async function EventPage({
     params: { slug }

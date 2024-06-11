@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { FormDataSchema } from "@/lib/schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { updateEvent } from "../app/events/actions";
+import { Event } from './Event';
 import Dropzone from '@/components/Dropzone';
 import { toHTML } from '@portabletext/to-html'
 import { FileType } from '@/lib/helpers';
@@ -33,7 +33,7 @@ const steps = [
     { id: 'Step 3', name: 'Complete' }
 ]
 
-export default function StepForm({ event, action }: { event: any, action: any }) {
+export default function StepForm({ event, action }: { event: Event, action: Function }) {
     const [previousStep, setPreviousStep] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
     const [isPending, startTransition] = useTransition();
@@ -41,7 +41,7 @@ export default function StepForm({ event, action }: { event: any, action: any })
     const [files, setFiles] = useState<FileType[]>([])
 
     console.log(event);
-    const descriptionInHtml = toHTML(event.descriptionRaw);
+    const descriptionInHtml = event.descriptionRaw._key === '' ? '' : toHTML(event.descriptionRaw);
     const delta = currentStep - previousStep;
     const [endDate, setEndDate] = useState(new Date(event.endDate));
     const [startDate, setStartDate] = useState(new Date(event.startDate));
@@ -126,15 +126,17 @@ export default function StepForm({ event, action }: { event: any, action: any })
         setValue('endDate', endDate);
         setValue('startDate', startDate);
 
-        fetch(event.mainImage.asset.url)
-            .then(response => response.blob())
-            .then(blob => {
-                const f = new File([blob], "mainImage");
-                const url = URL.createObjectURL(f);
-                setFiles([
-                    Object.assign(f, { preview: url })
-                ])
-            })
+        if (event.mainImage.asset.url.length > 0) {
+            fetch(event.mainImage.asset.url)
+                .then(response => response.blob())
+                .then(blob => {
+                    const f = new File([blob], "mainImage");
+                    const url = URL.createObjectURL(f);
+                    setFiles([
+                        Object.assign(f, { preview: url })
+                    ])
+                })
+        }
     }, [])
 
     const handleEndDateChange = (date: Date) => {
