@@ -31,24 +31,24 @@ export async function updateEvent(id: string, data: any, formData: FormData) {
         const builder = imageUrlBuilder(sanityClient);
 
         const defaultSchema = Schema.compile({
-        name: 'myBlog',
+            name: 'myBlog',
             types: [
                 {
-                type: 'object',
-                name: 'blogPost',
-                fields: [
-                    {
-                    title: 'Title',
-                    type: 'string',
-                    name: 'title',
-                    },
-                    {
-                    title: 'Body',
-                    name: 'body',
-                    type: 'array',
-                    of: [{type: 'block'}],
-                    },
-                ],
+                    type: 'object',
+                    name: 'blogPost',
+                    fields: [
+                        {
+                            title: 'Title',
+                            type: 'string',
+                            name: 'title',
+                        },
+                        {
+                            title: 'Body',
+                            name: 'body',
+                            type: 'array',
+                            of: [{type: 'block'}],
+                        },
+                    ],
                 },
             ],
         })
