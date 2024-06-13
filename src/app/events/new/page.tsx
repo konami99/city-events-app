@@ -1,6 +1,6 @@
 import { Event } from "@/components/Event";
 import StepForm from "@/components/StepForm";
-import { updateEvent } from "@/app/actions";
+import { createEvent } from "@/app/actions";
 
 export default async function NewPage() {
     const event: Event = {
@@ -11,8 +11,9 @@ export default async function NewPage() {
             "_type": "",
             "_key": "",
         },
-        startDate: '',
-        endDate: '',
+        description: '',
+        startDate: new Date().toISOString(),
+        endDate: new Date().toISOString(),
         eventOrganiser: '',
         mainImage: {
             asset: {
@@ -23,7 +24,7 @@ export default async function NewPage() {
 
     return (
         <>
-            <StepForm event={ event } action={ updateEvent } />
+            <StepForm event={ event } action={ createEvent } />
         </>
     )
 }

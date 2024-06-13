@@ -2,9 +2,11 @@ import { createClient } from "@sanity/client";
 import { sanityClientConfig } from "@/components/SanityClientConfig";
 
 export async function POST(request: Request) {
+    const url = new URL(request.url);
+    const params = new URLSearchParams(url.search);
+    const eventId = params.get('event_id') as string;
     /*
     const res = await request.json();
-
     return Response.json({ res })
     */
     const formData = await request.formData();
@@ -25,7 +27,7 @@ export async function POST(request: Request) {
             .upload('image', file)
             .then(imageAsset => {
                 return sanityClient
-                  .patch('ff570c65-1d27-4b77-809c-7aed7bab8c0c')
+                  .patch(eventId)
                   .set({
                     mainImage: {
                       _type: 'image',

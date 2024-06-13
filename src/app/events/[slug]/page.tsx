@@ -5,6 +5,7 @@ import {PortableText} from '@portabletext/react'
 import { fetchEvents } from "@/app/actions";
 import { createClient } from '@sanity/client'
 import { PageProps } from "@/lib/helpers";
+import { Event } from "@/components/Event";
 
 export default async function EventPage({
     params: { slug }

@@ -5,6 +5,7 @@ export interface Event {
     title: string,
     shortDescription: string,
     descriptionRaw: TypedObject,
+    description: string,
     startDate: string,
     endDate: string,
     eventOrganiser: string,
