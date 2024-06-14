@@ -23,7 +23,7 @@ export async function POST(request: Request) {
         //https://stackoverflow.com/questions/76725154/distinguish-entry-in-formdata-file-or-string
 
         const sanityClient = createClient(sanityClientConfig);
-        sanityClient.assets
+        await sanityClient.assets
             .upload('image', file)
             .then(imageAsset => {
                 return sanityClient
