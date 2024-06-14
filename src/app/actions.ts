@@ -54,7 +54,7 @@ export async function createEvent(_: string, data: Event, formData: FormData) {
             parseHtml: (html) => new JSDOM(html).window.document,
         })
 
-        sanityClient
+        await sanityClient
             .create({
                 _type: 'event',
                 eventOrganiser: data.eventOrganiser,
