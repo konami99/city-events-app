@@ -113,7 +113,7 @@ export async function updateEvent(eventId: string, data: Event, formData: FormDa
     const result = FormDataSchema.safeParse(data);
 
     if (result.success) {
-        fetch(`${process.env.NEXTAUTH_URL}/api?` + new URLSearchParams({
+        await fetch(`${process.env.NEXTAUTH_URL}/api?` + new URLSearchParams({
            event_id: eventId ,
         }), {
             method: "POST",
@@ -160,7 +160,7 @@ export async function updateEvent(eventId: string, data: Event, formData: FormDa
             parseHtml: (html) => new JSDOM(html).window.document,
         })
 
-        sanityClient
+        await sanityClient
             .patch(eventId)
             .set({
                 eventOrganiser: data.eventOrganiser,
