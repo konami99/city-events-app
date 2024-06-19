@@ -16,7 +16,7 @@
     "@sanity/client": "^6.19.1",
     "@sanity/image-url": "^1.0.2",
     "@sanity/schema": "^3.44.0",
-    "@tinymce/tinymce-react": "^5.0.1",
+    "@tinymce/tinymce-react": "^5.1.1",
     "daisyui": "^4.11.1",
     "eslint-config-prettier": "^9.1.0",
     "framer-motion": "^11.0.8",

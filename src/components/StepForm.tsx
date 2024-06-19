@@ -53,6 +53,7 @@ export default function StepForm({ event, action }: { event: Event, action: Func
         reset,
         trigger,
         setValue,
+        getValues,
         setError,
         formState: { errors }
     } = useForm<Inputs>({
@@ -98,9 +99,11 @@ export default function StepForm({ event, action }: { event: Event, action: Func
     const next = async () => {
         const fields = steps[currentStep].fields
 
+        /*
         if (currentStep === 0) {
             setValue('description', editorRef.current!.getContent({ format: 'html' }));
         }
+        */
 
         const output = await trigger(fields as FieldName[], { shouldFocus: true })
 
@@ -122,6 +125,11 @@ export default function StepForm({ event, action }: { event: Event, action: Func
         }
     }
     
+
+    useEffect(() => {
+        setValue('description', event.descriptionRaw._key === '' ? '' : toHTML(event.descriptionRaw));
+    }, [])
+
     useEffect(() => {
         setValue('endDate', endDate);
         setValue('startDate', startDate);
@@ -252,7 +260,14 @@ export default function StepForm({ event, action }: { event: Event, action: Func
                                             { value: 'Email', title: 'Email' },
                                         ],
                                     }}
-                                    initialValue={ descriptionInHtml }
+                                    //initialValue={ descriptionInHtml }
+                                    value={ getValues('description') }
+                                    
+                                    onEditorChange={(newValue, editor) => {
+                                        
+                                        setValue("description", newValue, { shouldValidate: true })
+                                    }}
+                                    
                                 />
                                 {errors.description?.message && (
                                     <p className='mt-2 text-sm text-red-400'>
