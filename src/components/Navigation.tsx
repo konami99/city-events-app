@@ -8,18 +8,19 @@ export default function Navigation() {
 
   return (
     <div className="navbar bg-base-100">
-      <div className="navbar-start"></div>
-      <div className="navbar-center">
+      <div className="flex-1">
         <a className="btn btn-ghost text-xl" href="/">What&apos;s On Sydney</a>
       </div>
-      <div className="navbar-end">
+      <div className="flex-none">
         {
           session && session.user ?
             <ul className="menu menu-horizontal px-1">
               <li>
                 <details>
-                  <summary>Hi { session.user.email }</summary>
-                  <ul className="p-2">
+                  <summary>
+                    Hi { session.user.email }
+                  </summary>
+                  <ul className="p-2 bg-base-100 rounded-t-none">
                     <li><a href="/dashboard">Dashboard</a></li>
                     <li><a onClick={() => handleSignOut()}>Log out</a></li>
                   </ul>
@@ -32,7 +33,7 @@ export default function Navigation() {
                 </a>
               </li>
             </ul>
-          :
+            :
             <ul className="menu menu-horizontal px-1">
               <li><a onClick={() => signIn()}>Log in</a></li>
               <li><a onClick={() => signIn()}>List your event for free</a></li>

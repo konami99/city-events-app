@@ -172,7 +172,7 @@ export default function StepForm({ event, action }: { event: Event, action: Func
             </ul>
 
             {/* Form */}
-            <form className='mx-96 py-12 min-w-[30%]' onSubmit={handleSubmit(processForm)}>
+            <form className='mx-96 py-12' onSubmit={handleSubmit(processForm)}>
                 {currentStep === 0 && (
                 <motion.div
                     initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
