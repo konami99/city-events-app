@@ -105,9 +105,9 @@ export default function StepForm({ event, action }: { event: Event, action: Func
         }
         */
 
-        //const output = await trigger(fields as FieldName[], { shouldFocus: true })
+        const output = await trigger(fields as FieldName[], { shouldFocus: true })
 
-        //if (!output) return
+        if (!output) return
 
         if (currentStep < steps.length - 1) {
             if (currentStep === steps.length - 2) {
