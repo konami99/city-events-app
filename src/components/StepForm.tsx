@@ -105,9 +105,9 @@ export default function StepForm({ event, action }: { event: Event, action: Func
         }
         */
 
-        const output = await trigger(fields as FieldName[], { shouldFocus: true })
+        //const output = await trigger(fields as FieldName[], { shouldFocus: true })
 
-        if (!output) return
+        //if (!output) return
 
         if (currentStep < steps.length - 1) {
             if (currentStep === steps.length - 2) {
@@ -172,200 +172,204 @@ export default function StepForm({ event, action }: { event: Event, action: Func
             </ul>
 
             {/* Form */}
-            <form className='mx-96 py-12' onSubmit={handleSubmit(processForm)}>
+            <form className='grid grid-cols-6 gap-4 container' onSubmit={handleSubmit(processForm)}>
                 {currentStep === 0 && (
-                <motion.div
-                    initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
-                >
-                    <h2 className='text-base font-semibold leading-7 text-gray-900'>
-                    Event Information
-                    </h2>
-                    <p className='mt-1 text-sm leading-6 text-gray-600'>
-                    Provide event details.
-                    </p>
+                    <div className='grid md:col-start-2 md:gap-4 md:col-span-4 mx-2 gap-2 col-span-6 col-start-1'>
+                        <motion.div
+                            initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        >
+                            <h2 className='text-base font-semibold leading-7 text-gray-900'>
+                            Event Information
+                            </h2>
+                            <p className='mt-1 text-sm leading-6 text-gray-600'>
+                            Provide event details.
+                            </p>
 
-                    <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
-                        <div className='col-span-full'>
-                            <label
-                            htmlFor='mainImage'
-                            className='block text-sm font-medium leading-6 text-gray-900'
-                            >
-                            Main Image
-                            </label>
+                            <div>
+                                <div className='col-span-full'>
+                                    <label
+                                    htmlFor='mainImage'
+                                    className='block text-sm font-medium leading-6 text-gray-900'
+                                    >
+                                    Main Image
+                                    </label>
 
-                            <Dropzone className={ 'mt-10 border border-neutral-200 p-16' } files={files} setFiles={setFiles} />
-                        </div>
-                        
-                        <div className='col-span-full'>
-                            <label
-                            htmlFor='title'
-                            className='block text-sm font-medium leading-6 text-gray-900'
-                            >
-                            Title
-                            </label>
-                            <div className='mt-2'>
-                            <input
-                                type='text'
-                                id='title'
-                                {...register('title')}
-                                defaultValue={ event.title }
-                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                            />
-                            {errors.title?.message && (
-                                <p className='mt-2 text-sm text-red-400'>
-                                {errors.title.message}
-                                </p>
-                            )}
+                                    <Dropzone className={ 'mt-10 border border-neutral-200 p-16' } files={files} setFiles={setFiles} />
+                                </div>
+                                
+                                <div className='col-span-full'>
+                                    <label
+                                    htmlFor='title'
+                                    className='block text-sm font-medium leading-6 text-gray-900'
+                                    >
+                                    Title
+                                    </label>
+                                    <div className='mt-2'>
+                                    <input
+                                        type='text'
+                                        id='title'
+                                        {...register('title')}
+                                        defaultValue={ event.title }
+                                        className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                                    />
+                                    {errors.title?.message && (
+                                        <p className='mt-2 text-sm text-red-400'>
+                                        {errors.title.message}
+                                        </p>
+                                    )}
+                                    </div>
+                                </div>
+
+                                <div className='col-span-full'>
+                                    <label
+                                    htmlFor='shortDescription'
+                                    className='block text-sm font-medium leading-6 text-gray-900'
+                                    >
+                                    Short Description
+                                    </label>
+                                    <div className='mt-2'>
+                                    <input
+                                        type='text'
+                                        id='shortDescription'
+                                        defaultValue={ event.shortDescription }
+                                        {...register('shortDescription')}
+                                        className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                                    />
+                                    {errors.shortDescription?.message && (
+                                        <p className='mt-2 text-sm text-red-400'>
+                                        {errors.shortDescription.message}
+                                        </p>
+                                    )}
+                                    </div>
+                                </div>
+
+                                <div className='col-span-full'>
+                                    <div className='mt-2'>
+                                        <input id='description' style={{display: 'none'}} {...register('description')} />
+                                        <Editor
+                                            id='richtexteditor'
+                                            apiKey='dd5142xewbx5sf8qfurvteyk3iebaz1rru58zmgaz1kug0bq'
+                                            onInit={(evt, editor) => editorRef.current = editor}
+                                            init={{
+                                                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                                                    tinycomments_mode: 'embedded',
+                                                    tinycomments_author: 'Author name',
+                                                    mergetags_list: [
+                                                    { value: 'First.Name', title: 'First Name' },
+                                                    { value: 'Email', title: 'Email' },
+                                                ],
+                                            }}
+                                            //initialValue={ descriptionInHtml }
+                                            value={ getValues('description') }
+                                            
+                                            onEditorChange={(newValue, editor) => {
+                                                
+                                                setValue("description", newValue, { shouldValidate: true })
+                                            }}
+                                            
+                                        />
+                                        {errors.description?.message && (
+                                            <p className='mt-2 text-sm text-red-400'>
+                                            {errors.description.message}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className='col-span-full'>
-                            <label
-                            htmlFor='shortDescription'
-                            className='block text-sm font-medium leading-6 text-gray-900'
-                            >
-                            Short Description
-                            </label>
-                            <div className='mt-2'>
-                            <input
-                                type='text'
-                                id='shortDescription'
-                                defaultValue={ event.shortDescription }
-                                {...register('shortDescription')}
-                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                            />
-                            {errors.shortDescription?.message && (
-                                <p className='mt-2 text-sm text-red-400'>
-                                {errors.shortDescription.message}
-                                </p>
-                            )}
-                            </div>
-                        </div>
-
-                        <div className='col-span-full'>
-                            <div className='mt-2'>
-                                <input id='description' style={{display: 'none'}} {...register('description')} />
-                                <Editor
-                                    id='richtexteditor'
-                                    apiKey='dd5142xewbx5sf8qfurvteyk3iebaz1rru58zmgaz1kug0bq'
-                                    onInit={(evt, editor) => editorRef.current = editor}
-                                    init={{
-                                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                                            tinycomments_mode: 'embedded',
-                                            tinycomments_author: 'Author name',
-                                            mergetags_list: [
-                                            { value: 'First.Name', title: 'First Name' },
-                                            { value: 'Email', title: 'Email' },
-                                        ],
-                                    }}
-                                    //initialValue={ descriptionInHtml }
-                                    value={ getValues('description') }
-                                    
-                                    onEditorChange={(newValue, editor) => {
-                                        
-                                        setValue("description", newValue, { shouldValidate: true })
-                                    }}
-                                    
-                                />
-                                {errors.description?.message && (
-                                    <p className='mt-2 text-sm text-red-400'>
-                                    {errors.description.message}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
+                        </motion.div>
                     </div>
-                </motion.div>
                 )}
 
                 {currentStep === 1 && (
-                <motion.div
-                    initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
-                >
-                    <h2 className='text-base font-semibold leading-7 text-gray-900'>
-                    More Event Details
-                    </h2>
-                    <p className='mt-1 text-sm leading-6 text-gray-600'>
-                    More event details.
-                    </p>
+                    <div className='grid md:col-start-2 md:gap-4 md:col-span-4 mx-2 gap-2 col-span-6 col-start-1'>
+                        <motion.div
+                            initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        >
+                            <h2 className='text-base font-semibold leading-7 text-gray-900'>
+                            More Event Details
+                            </h2>
+                            <p className='mt-1 text-sm leading-6 text-gray-600'>
+                            More event details.
+                            </p>
 
-                    <div className='mt-10 grid gap-x-6 gap-y-8'>
-                        <div>
-                            <label
-                            htmlFor='startDate'
-                            className='block text-sm font-medium leading-6 text-gray-900'
-                            >
-                            Start Date
-                            </label>
-                            <div className='mt-2'>
-                                <input
-                                    type='text'
-                                    id='startDate'
-                                    style={{display: 'none'}}
-                                    {...register('startDate')}
-                                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                                />
-                                <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" selected={startDate} onChange={handleStartDateChange} />
-                                {errors.startDate?.message && (
-                                    <p className='mt-2 text-sm text-red-400'>
-                                    {errors.startDate.message}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
+                            <div>
+                                <div>
+                                    <label
+                                    htmlFor='startDate'
+                                    className='block text-sm font-medium leading-6 text-gray-900'
+                                    >
+                                    Start Date
+                                    </label>
+                                    <div>
+                                        <input
+                                            type='text'
+                                            id='startDate'
+                                            style={{display: 'none'}}
+                                            {...register('startDate')}
+                                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                                        />
+                                        <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" selected={startDate} onChange={handleStartDateChange} />
+                                        {errors.startDate?.message && (
+                                            <p className='mt-2 text-sm text-red-400'>
+                                            {errors.startDate.message}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
 
-                        <div>
-                            <label
-                            htmlFor='endDate'
-                            className='block text-sm font-medium leading-6 text-gray-900'
-                            >
-                            End Date
-                            </label>
-                            <div className='mt-2'>
-                                <input
-                                    type='text'
-                                    id='endDate'
-                                    style={{display: 'none'}}
-                                    {...register('endDate')}
-                                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                                />
-                                <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" selected={endDate} onChange={handleEndDateChange} />
-                                {errors.endDate?.message && (
-                                    <p className='mt-2 text-sm text-red-400'>
-                                    {errors.endDate.message}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
+                                <div>
+                                    <label
+                                    htmlFor='endDate'
+                                    className='block text-sm font-medium leading-6 text-gray-900'
+                                    >
+                                    End Date
+                                    </label>
+                                    <div>
+                                        <input
+                                            type='text'
+                                            id='endDate'
+                                            style={{display: 'none'}}
+                                            {...register('endDate')}
+                                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                                        />
+                                        <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" selected={endDate} onChange={handleEndDateChange} />
+                                        {errors.endDate?.message && (
+                                            <p className='mt-2 text-sm text-red-400'>
+                                            {errors.endDate.message}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
 
-                        <div>
-                            <label
-                            htmlFor='eventOrganiser'
-                            className='block text-sm font-medium leading-6 text-gray-900'
-                            >
-                            Event Organiser
-                            </label>
-                            <div className='mt-2'>
-                                <input
-                                    type='text'
-                                    id='eventOrganiser'
-                                    defaultValue={event.eventOrganiser}
-                                    {...register('eventOrganiser')}
-                                    className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
-                                />
-                                {errors.eventOrganiser?.message && (
-                                    <p className='mt-2 text-sm text-red-400'>
-                                    {errors.eventOrganiser.message}
-                                    </p>
-                                )}
+                                <div>
+                                    <label
+                                    htmlFor='eventOrganiser'
+                                    className='block text-sm font-medium leading-6 text-gray-900'
+                                    >
+                                    Event Organiser
+                                    </label>
+                                    <div>
+                                        <input
+                                            type='text'
+                                            id='eventOrganiser'
+                                            defaultValue={event.eventOrganiser}
+                                            {...register('eventOrganiser')}
+                                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6'
+                                        />
+                                        {errors.eventOrganiser?.message && (
+                                            <p className='mt-2 text-sm text-red-400'>
+                                            {errors.eventOrganiser.message}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
-                </motion.div>
                 )}
 
                 {currentStep === 2 && (

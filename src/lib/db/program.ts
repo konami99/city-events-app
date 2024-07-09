@@ -3,7 +3,7 @@ export async function getPrograms({ where, limit = 10, page = 1 }: {
     limit?: number,
     page: number,
 }) {
-    const GRAPHQL_API_URL = 'https://on7y4gyd.api.sanity.io/v2023-08-01/graphql/production/default';
+    const GRAPHQL_API_URL = process.env.GRAPHQL_API_URL as string;
     const headers = {
         'content-type': 'application/json',
     }
