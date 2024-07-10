@@ -64,7 +64,7 @@ export default async function Page() {
     }
 
     return (
-        <div role="tablist" className="tabs tabs-lifted">
+        <div role="tablist" className="tabs tabs-lifted w-full">
             <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Draft" />
             <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
                 {
