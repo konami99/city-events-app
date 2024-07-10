@@ -72,8 +72,6 @@ export async function createEvent(_: string, data: Event, formData: FormData) {
                 startDate: data.startDate,
             })
             .then((createdEvent) => {
-                console.log('Hurray, the event is createdEvent! New document:')
-                console.log(createdEvent);
                 fetch(`${process.env.NEXTAUTH_URL}/api?` + new URLSearchParams({
                     event_id: createdEvent._id,
                  }), {
@@ -91,8 +89,6 @@ export async function createEvent(_: string, data: Event, formData: FormData) {
         revalidatePath("/events/[slug]", "page");
         revalidatePath("/events/[slug]/edit", "page");
     } else {
-        console.log('here')
-        console.log(result.error.flatten().fieldErrors)
         /*
         {
             title: [ 'Required' ],
@@ -179,7 +175,6 @@ export async function updateEvent(eventId: string, data: Event, formData: FormDa
             })
             .commit()
             .then((updatedEvent) => {
-                console.log('Hurray, the event is updated! New document:')
                 console.log(updatedEvent)
             })
             .catch((err) => {
@@ -189,8 +184,6 @@ export async function updateEvent(eventId: string, data: Event, formData: FormDa
         revalidatePath("/events/[slug]", "page");
         revalidatePath("/events/[slug]/edit", "page");
     } else {
-        console.log('here')
-        console.log(result.error.flatten().fieldErrors)
         /*
         {
             title: [ 'Required' ],

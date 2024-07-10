@@ -39,8 +39,6 @@ export default function StepForm({ event, action }: { event: Event, action: Func
     const [isPending, startTransition] = useTransition();
     const editorRef = useRef<TinyMCEEditor | null>(null);
     const [files, setFiles] = useState<FileType[]>([])
-
-    console.log(event);
     const descriptionInHtml = event.descriptionRaw._key === '' ? '' : toHTML(event.descriptionRaw);
     const delta = currentStep - previousStep;
     const [endDate, setEndDate] = useState(new Date(event.endDate));
