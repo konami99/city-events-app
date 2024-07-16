@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { FormDataSchema } from "@/lib/schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Event } from './Event';
+import Event from "@/components/Event";
 import Dropzone from '@/components/Dropzone';
 import { toHTML } from '@portabletext/to-html'
 import { FileType } from '@/lib/helpers';

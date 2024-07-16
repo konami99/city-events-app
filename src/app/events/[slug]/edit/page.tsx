@@ -2,12 +2,13 @@ import { fetchEvents } from "@/app/actions";
 import StepForm from "@/components/StepForm";
 import { PageProps } from "@/lib/helpers";
 import { updateEvent } from "@/app/actions";
+import Event from "@/components/Event";
 
 export default async function EventPage({
     params: { slug }
 }: PageProps) {
 
-    const events = await fetchEvents({
+    const events: Event[] = await fetchEvents({
         where: {
             slug: {
                 current: {

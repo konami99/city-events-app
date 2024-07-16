@@ -11,7 +11,7 @@ import { JSDOM } from 'jsdom';
 import { ulid } from "ulidx";
 import { revalidatePath } from "next/cache";
 import { FormDataSchema } from "@/lib/schema";
-import { Event } from "@/components/Event";
+import Event from "@/components/Event";
 
 export async function createEvent(_: string, data: Event, formData: FormData) {
     const result = FormDataSchema.safeParse(data);

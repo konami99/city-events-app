@@ -3,11 +3,12 @@ import { getServerSession } from "next-auth"
 import imageUrlBuilder from '@sanity/image-url'
 import { sanityClientConfig } from "@/components/SanityClientConfig";
 import { createClient } from '@sanity/client'
+import Event from '@/components/Event';
 
 export default async function Page() {
     const session = await getServerSession()
 
-    const events = await fetchEvents({
+    const events: Event[] = await fetchEvents({
         where: {
             user: {
                 email: {
@@ -21,9 +22,9 @@ export default async function Page() {
         limit: 100,
     })
 
-    const drafts = events.filter((event: any) => event.status === 'draft');
-    const pending = events.filter((event: any) => event.status === 'pending');
-    const approved = events.filter((event: any) => event.status === 'approved');
+    const drafts = events.filter((event: Event) => event.status === 'draft');
+    const pending = events.filter((event: Event) => event.status === 'pending');
+    const approved = events.filter((event: Event) => event.status === 'approved');
 
     const sanityClient = createClient(sanityClientConfig);
 

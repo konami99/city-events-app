@@ -5,7 +5,7 @@ import {PortableText} from '@portabletext/react'
 import { fetchEvents } from "@/app/actions";
 import { createClient } from '@sanity/client'
 import { PageProps } from "@/lib/helpers";
-import { Event } from "@/components/Event";
+import Event from "@/components/Event";
 
 export default async function EventPage({
     params: { slug }
@@ -18,7 +18,7 @@ export default async function EventPage({
         return builder.image(source)
     }
 
-    const events = await fetchEvents({
+    const events: Event[] = await fetchEvents({
         where: {
             slug: {
                 current: {
@@ -28,7 +28,7 @@ export default async function EventPage({
         }
     });
 
-    const event = events[0];
+    const event: Event = events[0];
 
     return (
         <div className="bg-white">

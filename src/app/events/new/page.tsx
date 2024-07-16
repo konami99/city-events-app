@@ -1,4 +1,4 @@
-import { Event } from "@/components/Event";
+import Event from "@/components/Event";
 import StepForm from "@/components/StepForm";
 import { createEvent } from "@/app/actions";
 
@@ -15,9 +15,12 @@ export default async function NewPage() {
         startDate: new Date().toISOString(),
         endDate: new Date().toISOString(),
         eventOrganiser: '',
+        status: '',
+        categories: [],
         mainImage: {
             asset: {
                 url: '',
+                _id: '',
             }
         }
     }

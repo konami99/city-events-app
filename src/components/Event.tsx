@@ -1,6 +1,7 @@
 import { TypedObject } from "@sanity/block-tools";
+import Category from "./Category";
 
-export interface Event {
+export default interface Event {
     _id: string,
     title: string,
     shortDescription: string,
@@ -8,10 +9,13 @@ export interface Event {
     description: string,
     startDate: string,
     endDate: string,
+    status: string,
     eventOrganiser: string,
+    categories: Category[],
     mainImage: {
         asset: {
             url: string,
+            _id: string,
         }
     }
 }
