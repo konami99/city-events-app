@@ -44,6 +44,7 @@ export async function getEvents({ where, limit = 10, page = 1 }: {
                         descriptionRaw
                         eventOrganiser
                         shortDescription
+                        status
                         _createdAt
                         _updatedAt
                     }

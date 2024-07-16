@@ -7,7 +7,7 @@ import { createClient } from '@sanity/client'
 export default async function Page() {
     const session = await getServerSession()
 
-    const draftEventsPromise = fetchEvents({
+    const events = await fetchEvents({
         where: {
             user: {
                 email: {
@@ -15,45 +15,15 @@ export default async function Page() {
                 }
             },
             status: {
-                eq: 'draft'
+                in: [ 'draft', 'pending', 'approved' ]
             }
         },
         limit: 100,
     })
 
-    const pendingEventsPromise = fetchEvents({
-        where: {
-            user: {
-                email: {
-                    eq: session?.user?.email
-                }
-            },
-            status: {
-                eq: 'pending'
-            }
-        },
-        limit: 100,
-    })
-    
-    const approvedEventsPromise = fetchEvents({
-        where: {
-            user: {
-                email: {
-                    eq: session?.user?.email
-                }
-            },
-            status: {
-                eq: 'approved'
-            }
-        },
-        limit: 100,
-    })
-    
-    const data = await Promise.all([
-        draftEventsPromise,
-        pendingEventsPromise,
-        approvedEventsPromise,
-    ])
+    const drafts = events.filter((event: any) => event.status === 'draft');
+    const pending = events.filter((event: any) => event.status === 'pending');
+    const approved = events.filter((event: any) => event.status === 'approved');
 
     const sanityClient = createClient(sanityClientConfig);
 
@@ -68,12 +38,12 @@ export default async function Page() {
             <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Draft" />
             <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
                 {
-                    data[0].length > 0
+                    drafts.length > 0
                     &&
                     <div className="dashboard-events-list px-[1rem] py-[2.5rem] bg-neutral-100">
                         <div className="dashboard-events-list-container max-w-[65rem]">
                             {
-                                data[0].map((event: any) => {
+                                drafts.map((event: any) => {
                                     return (
                                         <div key={event._id} className="dashboard-event-tile grid grid-rows-[1fr_auto] grid-cols-[7.5rem_1fr_35%] gap-1 mt-[1rem] bg-white">
                                             <div className="dashboard-event-tile-image row-start-1 row-span-1 col-start-1 col-span-1">
@@ -119,12 +89,12 @@ export default async function Page() {
             <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Pending" defaultChecked={true} />
             <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
                 {
-                    data[1].length > 0
+                    pending.length > 0
                     &&
                     <div className="dashboard-events-list px-[1rem] py-[2.5rem] bg-neutral-100">
                         <div className="dashboard-events-list-container max-w-[65rem]">
                             {
-                                data[1].map((event: any) => {
+                                pending.map((event: any) => {
                                     return (
                                         <div key={event._id} className="dashboard-event-tile grid grid-rows-[1fr_auto] grid-cols-[7.5rem_1fr_35%] gap-1 mt-[1rem] bg-white">
                                             <div className="dashboard-event-tile-image row-start-1 row-span-1 col-start-1 col-span-1">
@@ -170,12 +140,12 @@ export default async function Page() {
             <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Approved" />
             <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
                 {
-                    data[2].length > 0
+                    approved.length > 0
                     &&
                     <div className="dashboard-events-list px-[1rem] py-[2.5rem] bg-neutral-100">
                         <div className="dashboard-events-list-container max-w-[65rem]">
                             {
-                                data[2].map((event: any) => {
+                                approved.map((event: any) => {
                                     return (
                                         <div key={event._id} className="dashboard-event-tile grid grid-rows-[1fr_auto] grid-cols-[7.5rem_1fr_35%] gap-1 mt-[1rem] bg-white">
                                             <div className="dashboard-event-tile-image row-start-1 row-span-1 col-start-1 col-span-1">
