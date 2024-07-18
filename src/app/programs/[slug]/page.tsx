@@ -6,6 +6,8 @@ import { createClient, type ClientConfig } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url';
 import { v4 as uuid } from 'uuid';
 import { PageProps } from "@/lib/helpers";
+import Program from "@/components/Program";
+import Event from "@/components/Event";
 
 export default async function ProgramPage({
     params: { slug }
@@ -18,7 +20,7 @@ export default async function ProgramPage({
         return builder.image(source)
     }
 
-    const programs = await fetchPrograms({
+    const programs: Program[] = await fetchPrograms({
         where: {
             slug: {
                 current: {
@@ -28,9 +30,9 @@ export default async function ProgramPage({
         }
     });
 
-    const program = programs[0];
+    const program: Program = programs[0];
 
-    const events = await fetchEventsByProgram({ programSlug: slug });
+    const events: Event[] = await fetchEventsByProgram({ programSlug: slug });
 
     return (
         <div className="program">

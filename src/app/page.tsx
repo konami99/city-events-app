@@ -5,9 +5,10 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { fetchEvents } from './actions';
 import { sanityClientConfig } from "@/components/SanityClientConfig";
+import Event from '@/components/Event';
 
 export default async function Home() {
-  const today_events = await fetchEvents({
+  const today_events: Event[] = await fetchEvents({
     where: {
         startDate: {
             lte: new Date(new Date().setDate(new Date().getDate() - 1)),
@@ -21,7 +22,7 @@ export default async function Home() {
     }
   });
 
-  const selected_events = await fetchEvents({
+  const selected_events: Event[] = await fetchEvents({
     where: {
         startDate: {
             lte: new Date(new Date().setDate(new Date().getDate() - 1)),
@@ -52,7 +53,7 @@ export default async function Home() {
           <ChevronLeft targetId={ 'slider-todays-events' } />
           <div id="slider-todays-events" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
             {
-              today_events.map((event: any, index: any) => (
+              today_events.map((event: Event, index: number) => (
                 <EventCard key={index} event={event} imageSource={event.mainImage.asset._id} sanityClientConfig={sanityClientConfig} />
               ))
             }

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import EventCard from "@/components/EventCard";
 import Spinner from "@/components/Spinner";
+import Event from "@/components/Event";
+import { type ClientConfig } from '@sanity/client'
 
 export default function InfiniteScrollEvents({
     programSlug,
@@ -12,11 +14,11 @@ export default function InfiniteScrollEvents({
     sanityClientConfig,
 }: {
     programSlug: string,
-    initialEvents: any,
-    fetchEventsByProgram: any,
-    sanityClientConfig: any,
+    initialEvents: Event[],
+    fetchEventsByProgram: Function,
+    sanityClientConfig: ClientConfig,
 }) {
-    const [events, setEvents] = useState(initialEvents);
+    const [events, setEvents] = useState<Event[]>(initialEvents);
     const [showLoading, setShowLoading] = useState(false);
     const [ref, inView] = useInView();
     
@@ -46,7 +48,7 @@ export default function InfiniteScrollEvents({
     return (
         <>
             {
-                events.map((event: any, index: any) => (
+                events.map((event: Event, index: number) => (
                     <EventCard key={index} event={event} imageSource={event.mainImage.asset._ref} sanityClientConfig={sanityClientConfig} />
                 ))
             }

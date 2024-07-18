@@ -21,7 +21,11 @@ export default async function NewPage() {
             asset: {
                 url: '',
                 _id: '',
+                _ref: '',
             }
+        },
+        slug: {
+            current: '',
         }
     }
 

@@ -16,6 +16,10 @@ export default interface Event {
         asset: {
             url: string,
             _id: string,
+            _ref: string,
         }
+    },
+    slug: {
+        current: string,
     }
 }
