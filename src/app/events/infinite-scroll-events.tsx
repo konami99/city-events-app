@@ -31,7 +31,7 @@ export default function InfiniteScrollEvents({
         });
 
         if (nextEventsBatch.length > 0) {
-            setEvents((prev: any | undefined) => [
+            setEvents((prev: Event[] | undefined) => [
                 ...(prev?.length ? prev : []),
                 ...nextEventsBatch
             ])

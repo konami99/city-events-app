@@ -6,6 +6,7 @@ import { fetchEvents } from "@/app/actions";
 import { createClient } from '@sanity/client'
 import { PageProps } from "@/lib/helpers";
 import Event from "@/components/Event";
+import Category from "@/components/Category";
 
 export default async function EventPage({
     params: { slug }
@@ -14,7 +15,7 @@ export default async function EventPage({
 
     const builder = imageUrlBuilder(sanityClient)
 
-    const urlFor = (source: any) => {
+    const urlFor = (source: string) => {
         return builder.image(source)
     }
 
@@ -36,7 +37,7 @@ export default async function EventPage({
                 <div className="header-container">
                     <div className="m-[1rem]">
                         {
-                            event.categories.map((category: any, index: any) => (
+                            event.categories.map((category: Category, index: number) => (
                                 <CategoryTag name={ category.title } key={index} />
                             ))
                         }

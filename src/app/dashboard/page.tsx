@@ -30,7 +30,7 @@ export default async function Page() {
 
     const builder = imageUrlBuilder(sanityClient)
 
-    const urlFor = (source: any) => {
+    const urlFor = (source: string) => {
         return builder.image(source)
     }
 
@@ -44,7 +44,7 @@ export default async function Page() {
                     <div className="dashboard-events-list px-[1rem] py-[2.5rem] bg-neutral-100">
                         <div className="dashboard-events-list-container max-w-[65rem]">
                             {
-                                drafts.map((event: any) => {
+                                drafts.map((event: Event) => {
                                     return (
                                         <div key={event._id} className="dashboard-event-tile grid grid-rows-[1fr_auto] grid-cols-[7.5rem_1fr_35%] gap-1 mt-[1rem] bg-white">
                                             <div className="dashboard-event-tile-image row-start-1 row-span-1 col-start-1 col-span-1">
@@ -95,7 +95,7 @@ export default async function Page() {
                     <div className="dashboard-events-list px-[1rem] py-[2.5rem] bg-neutral-100">
                         <div className="dashboard-events-list-container max-w-[65rem]">
                             {
-                                pending.map((event: any) => {
+                                pending.map((event: Event) => {
                                     return (
                                         <div key={event._id} className="dashboard-event-tile grid grid-rows-[1fr_auto] grid-cols-[7.5rem_1fr_35%] gap-1 mt-[1rem] bg-white">
                                             <div className="dashboard-event-tile-image row-start-1 row-span-1 col-start-1 col-span-1">
@@ -146,7 +146,7 @@ export default async function Page() {
                     <div className="dashboard-events-list px-[1rem] py-[2.5rem] bg-neutral-100">
                         <div className="dashboard-events-list-container max-w-[65rem]">
                             {
-                                approved.map((event: any) => {
+                                approved.map((event: Event) => {
                                     return (
                                         <div key={event._id} className="dashboard-event-tile grid grid-rows-[1fr_auto] grid-cols-[7.5rem_1fr_35%] gap-1 mt-[1rem] bg-white">
                                             <div className="dashboard-event-tile-image row-start-1 row-span-1 col-start-1 col-span-1">

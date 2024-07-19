@@ -16,7 +16,7 @@ export default async function ProgramPage({
 
     const builder = imageUrlBuilder(sanityClient)
 
-    const urlFor = (source: any) => {
+    const urlFor = (source: string) => {
         return builder.image(source)
     }
 

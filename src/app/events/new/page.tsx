@@ -26,7 +26,9 @@ export default async function NewPage() {
         },
         slug: {
             current: '',
-        }
+        },
+        _createdAt: '',
+        _updatedAt: '',
     }
 
     return (

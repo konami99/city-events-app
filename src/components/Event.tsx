@@ -21,5 +21,7 @@ export default interface Event {
     },
     slug: {
         current: string,
-    }
+    },
+    _createdAt: string,
+    _updatedAt: string,
 }

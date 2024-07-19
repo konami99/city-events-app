@@ -83,7 +83,7 @@ export default async function Home() {
             <ChevronLeft targetId={ 'slider-our-picks' } />
             <div id="slider-our-picks" className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
               {
-                selected_events.map((event: any, index: any) => (
+                selected_events.map((event: Event, index: number) => (
                   <EventCard key={index} event={event} imageSource={event.mainImage.asset._id} sanityClientConfig={sanityClientConfig} />
                 ))
               }

@@ -12,6 +12,7 @@ import { ulid } from "ulidx";
 import { revalidatePath } from "next/cache";
 import { FormDataSchema } from "@/lib/schema";
 import Event from "@/components/Event";
+import * as blogPostSchema from "@/schemas/blogPost";
 
 export async function createEvent(_: string, data: Event, formData: FormData) {
     const result = FormDataSchema.safeParse(data);
@@ -23,28 +24,7 @@ export async function createEvent(_: string, data: Event, formData: FormData) {
 
         const builder = imageUrlBuilder(sanityClient);
 
-        const defaultSchema = Schema.compile({
-            name: 'myBlog',
-            types: [
-                {
-                    type: 'object',
-                    name: 'blogPost',
-                    fields: [
-                        {
-                            title: 'Title',
-                            type: 'string',
-                            name: 'title',
-                        },
-                        {
-                            title: 'Body',
-                            name: 'body',
-                            type: 'array',
-                            of: [{type: 'block'}],
-                        },
-                    ],
-                },
-            ],
-        })
+        const defaultSchema = Schema.compile(blogPostSchema);
 
         const blockContentType = defaultSchema
             .get('blogPost')
