@@ -1,0 +1,5 @@
+process.env.SANITY_PROJECT_ID = 'projectid'
+process.env.SANITY_DATASET = 'dataset'
+process.env.SANITY_USE_CDN = 'usecdn'
+process.env.SANITY_SECRET_TOKEN = 'secrettoken'
+process.env.SANITY_API_VERSION = '2023-12-31'

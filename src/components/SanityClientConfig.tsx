@@ -1,4 +1,4 @@
-import { createClient, type ClientConfig } from '@sanity/client'
+import { type ClientConfig } from '@sanity/client'
 
 export const sanityClientConfig: ClientConfig = {
     projectId: process.env.SANITY_PROJECT_ID,
