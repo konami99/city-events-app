@@ -1,23 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import Home from '@/app/page';
 import Event from '@/components/Event';
-import { createClient } from '@sanity/client';
-import imageUrlBuilder from '@sanity/image-url'
+import EventCard from '@/components/EventCard';
 
-jest.mock('@sanity/image-url', () => ({
-    __esModule: true,
-    default: () => {
-        return {
-            image: jest.fn().mockReturnThis(),
-            width: jest.fn().mockReturnThis(),
-            height: jest.fn().mockReturnThis(),
-            url: jest.fn().mockReturnValue('https://test.com'),
-        }
-    }
-}));
-
-jest.mock('@sanity/client');
-jest.mock('@/components/SanityClientConfig');
+jest.mock('@/components/EventCard')
 jest.mock('@/app/actions', () => ({
     createEvent: () => {},
     updateEvent: () => {},
