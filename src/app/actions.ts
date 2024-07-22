@@ -12,7 +12,7 @@ import { ulid } from "ulidx";
 import { revalidatePath } from "next/cache";
 import { FormDataSchema } from "@/lib/schema";
 import Event from "@/components/Event";
-import * as blogPostSchema from "@/schemas/blogPost";
+import blogPostSchema from "@/schemas/blogPost";
 
 export async function createEvent(_: string, data: Event, formData: FormData) {
     const result = FormDataSchema.safeParse(data);
