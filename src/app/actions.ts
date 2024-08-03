@@ -17,6 +17,8 @@ import blogPostSchema from "@/schemas/blogPost";
 export async function createEvent(_: string, data: Event, formData: FormData) {
     const result = FormDataSchema.safeParse(data);
 
+    console.log(`result: `, result)
+
     if (result.success) {
         const description = `<html><body>${data.description}</body></html>`;
 
